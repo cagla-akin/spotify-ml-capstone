@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Makes a Song Popular? — Çağla Akın</title>
+  <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --surface:  #1a1a1a;
+      --card:     #222222;
+      --green:    #1db954;
+      --green-dim:#158a3e;
+      --white:    #ffffff;
+      --off:      #e8e8e8;
+      --muted:    #9a9a9a;
+      --dim:      #444444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--off);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--dim);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 58px;
+    }
+    .nav-logo { color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      color: var(--green); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    h1 { font-family: Georgia, serif; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.15; color: var(--white); }
+    h2 { font-family: Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--white); margin-bottom: 1rem; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem; }
+    p  { color: var(--muted); margin-bottom: 1rem; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 3rem; padding-bottom: 3rem;
+      border-left: 4px solid var(--green);
+      padding-left: 2.5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    #hero h1 span { color: var(--green); }
+    #hero .subtitle {
+      font-size: 1.15rem; color: var(--off); margin: 1.5rem 0 2.5rem;
+      max-width: 620px;
+    }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 0.7rem 1.6rem;
+      border-radius: 3px; font-size: 0.875rem; font-weight: 600;
+      text-decoration: none; transition: opacity .2s, transform .15s;
+    }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-outline { border: 1px solid var(--dim); color: var(--off); }
+    .meta { margin-top: 3rem; font-size: 0.8rem; color: var(--dim); }
+    .meta span { color: var(--muted); }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--dim); margin: 0; }
+
+    /* ── STAT CARDS ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .stat-card {
+      background: var(--card); border-top: 3px solid var(--green);
+      padding: 1.5rem 1.25rem; border-radius: 2px;
+    }
+    .stat-card .num { font-family: Georgia, serif; font-size: 2.4rem; font-weight: 700; color: var(--green); line-height: 1; }
+    .stat-card .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* ── TWO COL ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── FINDING CARD ── */
+    .finding-card {
+      background: var(--surface); border-left: 4px solid var(--green);
+      padding: 2rem; border-radius: 2px;
+    }
+    .finding-card .big-num {
+      font-family: Georgia, serif; font-size: 4.5rem; font-weight: 700;
+      color: var(--green); line-height: 1; margin: 0.75rem 0 0.5rem;
+    }
+    .finding-card .label { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── INSIGHT CALLOUTS ── */
+    .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+    @media (max-width: 600px) { .insight-grid { grid-template-columns: 1fr; } }
+    .insight-card {
+      background: var(--card); padding: 1.75rem 1.5rem; border-radius: 2px;
+      border-top: 3px solid var(--green);
+    }
+    .insight-card.dim-top { border-top-color: var(--dim); }
+    .insight-card .pct { font-family: Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--green); line-height: 1; }
+    .insight-card.dim-top .pct { color: var(--muted); }
+    .insight-card p { font-size: 0.9rem; margin-top: 0.6rem; margin-bottom: 0; }
+
+    /* ── CHART ── */
+    .chart-wrap { background: var(--surface); padding: 2rem; border-radius: 2px; margin-top: 2rem; }
+    .chart-wrap canvas { max-height: 300px; }
+
+    /* ── MODEL TABLE ── */
+    table { width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 0.9rem; }
+    thead tr { background: var(--surface); }
+    thead th { padding: 0.75rem 1rem; text-align: left; color: var(--muted); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.05em; }
+    tbody tr { border-top: 1px solid var(--dim); }
+    tbody tr:hover { background: var(--surface); }
+    tbody td { padding: 0.8rem 1rem; color: var(--off); }
+    tbody tr.winner { background: rgba(29,185,84,0.08); }
+    tbody tr.winner td { color: var(--white); font-weight: 600; }
+    .badge { display: inline-block; background: var(--green); color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; margin-left: 0.5rem; vertical-align: middle; }
+
+    /* ── NOTEBOOKS ── */
+    .notebook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .notebook-card {
+      background: var(--card); border: 1px solid var(--dim);
+      border-radius: 2px; padding: 1.25rem 1.25rem 1rem;
+      text-decoration: none; transition: border-color .2s, transform .15s;
+      display: block;
+    }
+    .notebook-card:hover { border-color: var(--green); transform: translateY(-2px); }
+    .notebook-card .nb-num { font-size: 0.7rem; color: var(--green); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .notebook-card .nb-title { font-weight: 600; color: var(--white); font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .notebook-card .nb-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── APP SECTION ── */
+    .app-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .app-feature {
+      background: var(--card); padding: 1.25rem;
+      border-left: 3px solid var(--green); border-radius: 2px;
+    }
+    .app-feature h3 { font-size: 0.9rem; }
+    .app-feature p { font-size: 0.83rem; margin: 0; }
+
+    /* ── TECH STACK ── */
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
+    .pill {
+      background: var(--surface); border: 1px solid var(--dim);
+      color: var(--muted); font-size: 0.8rem; padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--dim);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--dim);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" style="display:flex;align-items:center;gap:0.5rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
+    Spotify Capstone
+    <span style="color:var(--dim);font-weight:400;font-size:0.75rem;letter-spacing:0.03em;padding-left:0.5rem;border-left:1px solid var(--dim);margin-left:0.25rem;">Imperial College London · Data Science Programme · 2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#notebooks">Code</a></li>
+    <li><a href="#app">App</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <h1>What Makes a Song<br><span>Popular?</span></h1>
+  <p class="subtitle">
+    Predicting Spotify track popularity using machine learning —
+    from exploratory analysis to a Random Forest model achieving R² = 0.88,
+    with an interactive hit predictor app.
+  </p>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="#notebooks">View Code</a>
+    <a class="btn btn-outline" href="Spotify_Capstone_Portfolio.pptx">Download Deck</a>
+  </div>
+  <p class="meta">By <span>Çağla Akın</span> &nbsp;·&nbsp; Dataset: <span>~170,000 Spotify tracks</span> &nbsp;·&nbsp; Tools: <span>Python · scikit-learn · Streamlit</span></p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">~170K</div>
+      <div class="lbl">Spotify tracks analysed</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">13</div>
+      <div class="lbl">Audio features per track</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4</div>
+      <div class="lbl">Models trained &amp; compared</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">0.88</div>
+      <div class="lbl">Best model R² (Random Forest)</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- FINDINGS -->
+<section id="findings">
+  <p class="section-label">Exploratory Data Analysis</p>
+  <h2>Key Finding: Audio Features Alone Don't Explain Popularity</h2>
+  <p>Audio features like danceability, energy, and tempo have weak individual correlations with popularity (max ~0.30). The real driver is something else entirely.</p>
+
+  <div class="two-col" style="margin-top:2.5rem;">
+    <div>
+      <div class="finding-card">
+        <p class="label">Correlation: Artist Avg Popularity ↔ Track Popularity</p>
+        <div class="big-num">0.92</div>
+        <p style="color:var(--off); margin:0;">A track's popularity is almost entirely predicted by how popular the artist already is — not how the song sounds.</p>
+      </div>
+      <p style="margin-top:1.25rem; font-size:0.875rem;">
+        By engineering an <strong style="color:var(--white);">artist average popularity</strong> feature (mean of each artist's top tracks), the model's R² jumped from <strong style="color:var(--white);">0.47 → 0.86</strong> — a near doubling of explanatory power.
+      </p>
+    </div>
+    <div>
+      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem;">Audio Feature Correlations with Popularity</h3>
+      <div style="display:flex; flex-direction:column; gap:0.6rem;">
+        <!-- Manual bar chart using CSS -->
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">year</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:30%; background:var(--green); height:100%; border-radius:2px;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.30</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">loudness</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:19%; background:var(--green); height:100%; border-radius:2px;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.19</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">energy</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:13%; background:var(--green); height:100%; border-radius:2px;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.13</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">danceability</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:11%; background:var(--green); height:100%; border-radius:2px;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.11</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">acousticness</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:12%; background:#e05252; height:100%; border-radius:2px; margin-left:auto;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">−0.12</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
+          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">instrumentalness</span>
+          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
+            <div style="width:18%; background:#e05252; height:100%; border-radius:2px; margin-left:auto;"></div>
+            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">−0.18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- RESULTS -->
+<section id="results">
+  <p class="section-label">Model Results</p>
+  <h2>Four Models, One Clear Winner</h2>
+  <p>All models were trained on an 80/20 train-test split and evaluated using R² and RMSE. None showed significant overfitting (train/test gap &lt; 0.03).</p>
+
+  <div class="two-col" style="margin-top:2.5rem; align-items:start;">
+    <div class="chart-wrap">
+      <canvas id="modelChart"></canvas>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Test R²</th>
+            <th>RMSE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LR — Baseline</td>
+            <td>0.47</td>
+            <td>15.77</td>
+          </tr>
+          <tr>
+            <td>LR — Artist + Year</td>
+            <td>0.86</td>
+            <td>8.09</td>
+          </tr>
+          <tr class="winner">
+            <td>Random Forest <span class="badge">Best</span></td>
+            <td>0.88</td>
+            <td>7.59</td>
+          </tr>
+          <tr>
+            <td>XGBoost</td>
+            <td>0.87</td>
+            <td>7.71</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:1rem; font-size:0.82rem; color:var(--green);">✓ No overfitting: train/test gap &lt; 0.03 across all models</p>
+    </div>
+  </div>
+
+  <!-- Feature importance -->
+  <div style="margin-top:4rem;">
+    <p class="section-label">Feature Importance (Random Forest)</p>
+    <h2>What Actually Drives Popularity?</h2>
+    <p>97% of the model's predictive power comes from just two features. All 13 audio features combined account for only ~3%.</p>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="pct">97%</div>
+        <p>of predictive power from <strong style="color:var(--white);">year of release + artist popularity</strong> alone.</p>
+      </div>
+      <div class="insight-card dim-top">
+        <div class="pct">~3%</div>
+        <p>from all 13 audio features combined — danceability, energy, tempo, valence, and more.</p>
+      </div>
+    </div>
+    <p style="margin-top:1.5rem; font-style:italic; font-size:0.875rem;">
+      Sound matters less than brand. A great-sounding song from an unknown artist will almost always underperform a mediocre one from a superstar.
+    </p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- NOTEBOOKS -->
+<section id="notebooks">
+  <p class="section-label">Code</p>
+  <h2>Notebooks</h2>
+  <p>All analysis is documented in Jupyter notebooks. Click any to view on GitHub.</p>
+  <div class="notebook-grid">
+    <a class="notebook-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/1.%20Spotify_LinearReg_Data2.ipynb">
+      <div class="nb-num">Notebook 01</div>
+      <div class="nb-title">Linear Regression — Baseline</div>
+      <div class="nb-desc">EDA, feature exploration, and a baseline linear regression on audio features only. R² = 0.47.</div>
+    </a>
+    <a class="notebook-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/2.%20Spotify_Modeling_WithCategorical.ipynb">
+      <div class="nb-num">Notebook 02</div>
+      <div class="nb-title">Modelling with Categorical Features</div>
+      <div class="nb-desc">Adding explicit and key as categorical features. Standardisation check — confirms no effect on LR performance.</div>
+    </a>
+    <a class="notebook-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/3.%20Spotify_ArtistPopularity.ipynb">
+      <div class="nb-num">Notebook 03</div>
+      <div class="nb-title">Artist Popularity Feature</div>
+      <div class="nb-desc">Engineering the artist average popularity feature. Correlation with track popularity: 0.92. R² jumps to 0.86.</div>
+    </a>
+    <a class="notebook-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/4.%20Spotify_ModelComparison.ipynb">
+      <div class="nb-num">Notebook 04</div>
+      <div class="nb-title">Model Comparison</div>
+      <div class="nb-desc">Random Forest vs XGBoost vs Linear Regression. Feature importance analysis. Random Forest wins with R² = 0.88.</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- APP -->
+<section id="app">
+  <p class="section-label">Interactive Tool</p>
+  <h2>Spotify Hit Predictor App</h2>
+  <p>A Streamlit app that lets you predict a track's popularity score in real time. Type an artist name and adjust audio feature sliders — the Random Forest model returns an instant prediction.</p>
+
+  <div class="app-features">
+    <div class="app-feature">
+      <h3>Artist Lookup</h3>
+      <p>Type any artist — the model retrieves their historical popularity to inform the score.</p>
+    </div>
+    <div class="app-feature">
+      <h3>Audio Sliders</h3>
+      <p>Adjust danceability, energy, valence, tempo and more in real time.</p>
+    </div>
+    <div class="app-feature">
+      <h3>Instant Prediction</h3>
+      <p>Random Forest model returns a predicted popularity score (0–100) instantly.</p>
+    </div>
+    <div class="app-feature">
+      <h3>Feature Importance</h3>
+      <p>Built-in chart shows which inputs drove the prediction — transparent and explainable.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:2rem;">
+    <p class="section-label" style="margin-bottom:0.75rem;">Tech Stack</p>
+    <div class="tech-pills">
+      <span class="pill">Python 3.11</span>
+      <span class="pill">pandas</span>
+      <span class="pill">scikit-learn</span>
+      <span class="pill">XGBoost</span>
+      <span class="pill">Streamlit</span>
+      <span class="pill">Plotly</span>
+      <span class="pill">NumPy</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- FOOTER -->
+<footer>
+  <p style="color:var(--muted); margin-bottom:0.5rem;">
+    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial College London — Data Science Programme &nbsp;·&nbsp; 2026
+  </p>
+  <p>
+    <a href="https://github.com/cagla-akin/spotify-ml-capstone">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="Spotify_Capstone_Portfolio.pptx">Download Deck</a>
+  </p>
+</footer>
+
+<!-- CHART.JS -->
+<script>
+  const ctx = document.getElementById('modelChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['LR Baseline', 'LR + Artist & Year', 'Random Forest', 'XGBoost'],
+      datasets: [{
+        label: 'Test R²',
+        data: [0.4675, 0.8599, 0.8765, 0.8728],
+        backgroundColor: ['#4A90D9', '#7B68EE', '#1DB954', '#F5A623'],
+        borderRadius: 3,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' R² = ' + ctx.parsed.y.toFixed(4)
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: '#333' }, ticks: { color: '#9a9a9a', font: { size: 11 } } },
+        y: {
+          min: 0, max: 1,
+          grid: { color: '#333' },
+          ticks: { color: '#9a9a9a', font: { size: 11 } }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
