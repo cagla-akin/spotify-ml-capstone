@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pandoc \"/Users/caglaakin/Desktop/Imperial Data Science Program/Capstone Project/Spotify 2 Vikesh/Case Study - Popular Songs🎵.docx\" -o /tmp/spotify_case_study.md)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c ' *)"
+    ]
+  }
+}
