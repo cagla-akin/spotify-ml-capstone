@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 
-from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 
@@ -59,19 +59,17 @@ def load_and_train():
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    rf = RandomForestRegressor(
-        n_estimators=100, max_depth=15, min_samples_leaf=10, random_state=42
-    )
-    rf.fit(X_train, y_train)
+    model = XGBRegressor(random_state=42, n_jobs=-1)
+    model.fit(X_train, y_train)
 
-    r2_test = r2_score(y_test, rf.predict(X_test))
+    r2_test = r2_score(y_test, model.predict(X_test))
 
     feature_cols = X.columns.tolist()
     global_median = df[feature_cols].median()
 
-    return rf, feature_cols, artist_lookup, global_median, r2_test, df
+    return model, feature_cols, artist_lookup, global_median, r2_test, df
 
-rf, feature_cols, artist_lookup, global_median, r2_test, df = load_and_train()
+model, feature_cols, artist_lookup, global_median, r2_test, df = load_and_train()
 
 # ── Helper: lookup artist avg popularity ─────────────────────────────────────
 def get_artist_popularity(name):
@@ -201,7 +199,7 @@ with col_result:
     }
 
     input_df = pd.DataFrame([input_data])[feature_cols]
-    predicted = float(rf.predict(input_df)[0])
+    predicted = float(model.predict(input_df)[0])
     predicted = max(0.0, min(100.0, predicted))
 
     st.plotly_chart(make_gauge(predicted), use_container_width=True)
@@ -227,4 +225,4 @@ with col_result:
     })
     st.dataframe(snap, hide_index=True, use_container_width=True)
 
-    st.caption(f"Model: Random Forest · Test R² = {r2_test:.4f} · ~170k training tracks")
+    st.caption(f"Model: XGBoost (Default) · Test R² = {r2_test:.4f} · ~170k training tracks")

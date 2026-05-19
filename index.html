@@ -34,14 +34,15 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(13,13,13,0.92);
+      background: rgba(13,13,13,0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--dim);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 2rem; height: 58px;
     }
-    .nav-logo { color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-logo { color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-logo .nav-sub { color: var(--dim); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.03em; padding-left: 0.5rem; border-left: 1px solid var(--dim); margin-left: 0.25rem; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color .2s; }
     .nav-links a:hover { color: var(--white); }
 
@@ -58,7 +59,7 @@
 
     /* ── HERO ── */
     #hero {
-      min-height: 92vh;
+      min-height: 90vh;
       display: flex; flex-direction: column; justify-content: center;
       padding-top: 3rem; padding-bottom: 3rem;
       border-left: 4px solid var(--green);
@@ -66,10 +67,7 @@
       max-width: 1100px; margin: 0 auto;
     }
     #hero h1 span { color: var(--green); }
-    #hero .subtitle {
-      font-size: 1.15rem; color: var(--off); margin: 1.5rem 0 2.5rem;
-      max-width: 620px;
-    }
+    #hero .subtitle { font-size: 1.15rem; color: var(--off); margin: 1.5rem 0 2.5rem; max-width: 660px; }
     .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn {
       display: inline-block; padding: 0.7rem 1.6rem;
@@ -79,6 +77,7 @@
     .btn:hover { opacity: 0.85; transform: translateY(-1px); }
     .btn-primary { background: var(--green); color: #000; }
     .btn-outline { border: 1px solid var(--dim); color: var(--off); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
     .meta { margin-top: 3rem; font-size: 0.8rem; color: var(--dim); }
     .meta span { color: var(--muted); }
 
@@ -93,6 +92,11 @@
     }
     .stat-card .num { font-family: Georgia, serif; font-size: 2.4rem; font-weight: 700; color: var(--green); line-height: 1; }
     .stat-card .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* ── PROSE ── */
+    .prose { max-width: 760px; }
+    .prose p { font-size: 1rem; line-height: 1.8; color: var(--off); margin-bottom: 1.25rem; }
+    .prose strong { color: var(--white); }
 
     /* ── TWO COL ── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
@@ -109,6 +113,25 @@
     }
     .finding-card .label { font-size: 0.85rem; color: var(--muted); }
 
+    /* ── EDA FINDINGS LIST ── */
+    .eda-findings { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 2rem; }
+    .eda-finding { display: flex; gap: 1.5rem; }
+    .eda-num { font-family: Georgia, serif; font-size: 2.5rem; font-weight: 700; color: var(--green); line-height: 1; flex-shrink: 0; width: 2.5rem; text-align: right; }
+    .eda-content h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+    .eda-content p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.7; }
+    .eda-content .stat-inline { color: var(--green); font-weight: 700; }
+
+    /* ── CORRELATION BARS ── */
+    .corr-chart { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.5rem; }
+    .corr-row { display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; }
+    .corr-label { width: 140px; color: var(--muted); text-align: right; flex-shrink: 0; }
+    .corr-track { flex: 1; background: var(--surface); border-radius: 2px; height: 22px; position: relative; }
+    .corr-fill-pos { background: var(--green); height: 100%; border-radius: 2px; }
+    .corr-fill-neg { background: #e05252; height: 100%; border-radius: 2px; margin-left: auto; }
+    .corr-fill-eng { background: #5b8dee; height: 100%; border-radius: 2px; }
+    .corr-val { position: absolute; right: 8px; top: 3px; color: var(--muted); font-size: 0.75rem; }
+    .corr-note { font-size: 0.78rem; color: var(--dim); margin-top: 0.75rem; }
+
     /* ── INSIGHT CALLOUTS ── */
     .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
     @media (max-width: 600px) { .insight-grid { grid-template-columns: 1fr; } }
@@ -123,10 +146,11 @@
 
     /* ── CHART ── */
     .chart-wrap { background: var(--surface); padding: 2rem; border-radius: 2px; margin-top: 2rem; }
-    .chart-wrap canvas { max-height: 300px; }
+    .chart-wrap canvas { max-height: 320px; }
 
     /* ── MODEL TABLE ── */
-    table { width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 0.9rem; }
+    .table-wrap { overflow-x: auto; margin-top: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     thead tr { background: var(--surface); }
     thead th { padding: 0.75rem 1rem; text-align: left; color: var(--muted); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.05em; }
     tbody tr { border-top: 1px solid var(--dim); }
@@ -136,44 +160,60 @@
     tbody tr.winner td { color: var(--white); font-weight: 600; }
     .badge { display: inline-block; background: var(--green); color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; margin-left: 0.5rem; vertical-align: middle; }
 
-    /* ── NOTEBOOKS ── */
-    .notebook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 2rem; }
-    .notebook-card {
-      background: var(--card); border: 1px solid var(--dim);
-      border-radius: 2px; padding: 1.25rem 1.25rem 1rem;
-      text-decoration: none; transition: border-color .2s, transform .15s;
-      display: block;
-    }
-    .notebook-card:hover { border-color: var(--green); transform: translateY(-2px); }
-    .notebook-card .nb-num { font-size: 0.7rem; color: var(--green); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
-    .notebook-card .nb-title { font-weight: 600; color: var(--white); font-size: 0.95rem; margin-bottom: 0.4rem; }
-    .notebook-card .nb-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    /* ── PIPELINE STEPS ── */
+    .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; margin-top: 2rem; background: var(--dim); border: 1px solid var(--dim); }
+    .pipeline-step { background: var(--card); padding: 1.5rem 1.25rem; }
+    .pipeline-step .step-num { font-size: 0.68rem; font-weight: 700; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .pipeline-step h3 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .pipeline-step p { font-size: 0.82rem; margin: 0; }
 
-    /* ── APP SECTION ── */
-    .app-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
-    .app-feature {
-      background: var(--card); padding: 1.25rem;
-      border-left: 3px solid var(--green); border-radius: 2px;
+    /* ── BIZ IMPLICATION CARDS ── */
+    .biz-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+    .biz-card { background: var(--surface); padding: 1.75rem 2rem; border-radius: 2px; border-left: 4px solid var(--green); display: flex; gap: 1.5rem; align-items: flex-start; }
+    .biz-card.dim { border-left-color: var(--dim); }
+    .biz-num { font-family: Georgia, serif; font-size: 2.8rem; font-weight: 700; color: var(--green); line-height: 1; flex-shrink: 0; }
+    .biz-card.dim .biz-num { color: var(--muted); }
+    .biz-content h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.35rem; }
+    .biz-content p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.7; }
+
+    /* ── LIMITATION CARDS ── */
+    .limit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+    @media (max-width: 700px) { .limit-grid { grid-template-columns: 1fr; } }
+    .limit-card { background: var(--card); padding: 1.5rem; border-radius: 2px; border-top: 2px solid var(--dim); }
+    .limit-card .limit-num { font-size: 0.68rem; font-weight: 700; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .limit-card h3 { font-size: 0.9rem; color: var(--off); margin-bottom: 0.35rem; }
+    .limit-card p { font-size: 0.82rem; margin: 0; }
+
+    /* ── RESOURCE CARDS ── */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .resource-card {
+      background: var(--card); border: 1px solid var(--dim);
+      border-radius: 2px; padding: 1.5rem;
+      text-decoration: none; display: block;
+      transition: border-color .2s, transform .15s;
     }
+    .resource-card:hover { border-color: var(--green); transform: translateY(-2px); }
+    .resource-card .rc-type { font-size: 0.68rem; font-weight: 700; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .resource-card .rc-title { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+    .resource-card .rc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── APP FEATURES ── */
+    .app-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .app-feature { background: var(--card); padding: 1.25rem; border-left: 3px solid var(--green); border-radius: 2px; }
     .app-feature h3 { font-size: 0.9rem; }
     .app-feature p { font-size: 0.83rem; margin: 0; }
 
-    /* ── TECH STACK ── */
+    /* ── TECH PILLS ── */
     .tech-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
-    .pill {
-      background: var(--surface); border: 1px solid var(--dim);
-      color: var(--muted); font-size: 0.8rem; padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-    }
+    .pill { background: var(--surface); border: 1px solid var(--dim); color: var(--muted); font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 20px; }
+
+    /* ── CALLOUT BOX ── */
+    .callout { background: rgba(29,185,84,0.07); border: 1px solid rgba(29,185,84,0.25); border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .callout p { color: var(--off); font-size: 0.9rem; margin: 0; }
+    .callout strong { color: var(--green); }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--dim);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--dim);
-    }
+    footer { border-top: 1px solid var(--dim); padding: 2.5rem 1.5rem; text-align: center; font-size: 0.82rem; color: var(--dim); }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--green); }
   </style>
@@ -182,232 +222,556 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#" style="display:flex;align-items:center;gap:0.5rem;">
+  <a class="nav-logo" href="#">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
     Spotify Capstone
-    <span style="color:var(--dim);font-weight:400;font-size:0.75rem;letter-spacing:0.03em;padding-left:0.5rem;border-left:1px solid var(--dim);margin-left:0.25rem;">Imperial College London · Data Science Programme · 2026</span>
+    <span class="nav-sub">Imperial College London · 2026</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#findings">Findings</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#notebooks">Code</a></li>
-    <li><a href="#app">App</a></li>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#eda">EDA</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#business">Business</a></li>
+    <li><a href="#code">Code</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
+
+<!-- ═══════════════════════════════════════════════════════ HERO -->
 <section id="hero">
+  <p class="section-label">Capstone Project · Imperial Executive Education · 2026</p>
   <h1>What Makes a Song<br><span>Popular?</span></h1>
   <p class="subtitle">
-    Predicting Spotify track popularity using machine learning —
-    from exploratory analysis to a Random Forest model achieving R² = 0.88,
-    with an interactive hit predictor app.
+    Predicting Spotify track popularity using machine learning on 169,909 tracks
+    spanning 1921–2020. Release year and artist reputation explain 97% of what the
+    model learns. Audio features contribute less than 3%.
   </p>
   <div class="btn-row">
-    <a class="btn btn-primary" href="#notebooks">View Code</a>
-    <a class="btn btn-outline" href="https://github.com/cagla-akin/spotify-ml-capstone">View on GitHub</a>
+    <a class="btn btn-primary" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb" target="_blank">View Notebook</a>
+    <a class="btn btn-outline" href="Spotify_HitPredictor_Final_v4.pptx" download>Download Deck</a>
+    <a class="btn btn-outline" href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
   </div>
-  <p class="meta">By <span>Çağla Akın</span> &nbsp;·&nbsp; Dataset: <span>~170,000 Spotify tracks</span> &nbsp;·&nbsp; Tools: <span>Python · scikit-learn · Streamlit</span></p>
+  <p class="meta">By <span>Çağla Akın</span> &nbsp;·&nbsp; Dataset: <span>169,909 Spotify tracks (Kaggle / Spotify API)</span> &nbsp;·&nbsp; Tools: <span>Python · scikit-learn · XGBoost · Streamlit · AWS</span></p>
 
   <div class="stat-grid">
     <div class="stat-card">
-      <div class="num">~170K</div>
-      <div class="lbl">Spotify tracks analysed</div>
+      <div class="num">169,909</div>
+      <div class="lbl">Raw tracks · Spotify API · 1921–2020</div>
     </div>
     <div class="stat-card">
-      <div class="num">13</div>
-      <div class="lbl">Audio features per track</div>
+      <div class="num">0.72</div>
+      <div class="lbl">Best model R² · XGBoost default</div>
     </div>
     <div class="stat-card">
-      <div class="num">4</div>
-      <div class="lbl">Models trained &amp; compared</div>
+      <div class="num">9.65</div>
+      <div class="lbl">Best RMSE · 25.6% of mean popularity</div>
     </div>
     <div class="stat-card">
-      <div class="num">0.88</div>
-      <div class="lbl">Best model R² (Random Forest)</div>
+      <div class="num">5</div>
+      <div class="lbl">Models trained and compared</div>
     </div>
   </div>
 </section>
 
 <hr class="divider" />
 
-<!-- FINDINGS -->
-<section id="findings">
-  <p class="section-label">Exploratory Data Analysis</p>
-  <h2>Key Finding: Audio Features Alone Don't Explain Popularity</h2>
-  <p>Audio features like danceability, energy, and tempo have weak individual correlations with popularity (max ~0.30). The real driver is something else entirely.</p>
 
-  <div class="two-col" style="margin-top:2.5rem;">
-    <div>
-      <div class="finding-card">
-        <p class="label">Correlation: Artist Avg Popularity ↔ Track Popularity</p>
-        <div class="big-num">0.92</div>
-        <p style="color:var(--off); margin:0;">A track's popularity is almost entirely predicted by how popular the artist already is — not how the song sounds.</p>
-      </div>
-      <p style="margin-top:1.25rem; font-size:0.875rem;">
-        By engineering an <strong style="color:var(--white);">artist average popularity</strong> feature (mean of each artist's top tracks), the model's R² jumped from <strong style="color:var(--white);">0.47 → 0.86</strong> — a near doubling of explanatory power.
-      </p>
-    </div>
-    <div>
-      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem;">Audio Feature Correlations with Popularity</h3>
-      <div style="display:flex; flex-direction:column; gap:0.6rem;">
-        <!-- Manual bar chart using CSS -->
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">year</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:30%; background:var(--green); height:100%; border-radius:2px;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.30</span>
-          </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">loudness</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:19%; background:var(--green); height:100%; border-radius:2px;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.19</span>
-          </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">energy</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:13%; background:var(--green); height:100%; border-radius:2px;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.13</span>
-          </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">danceability</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:11%; background:var(--green); height:100%; border-radius:2px;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">0.11</span>
-          </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">acousticness</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:12%; background:#e05252; height:100%; border-radius:2px; margin-left:auto;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">−0.12</span>
-          </div>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.75rem; font-size:0.82rem;">
-          <span style="width:120px; color:var(--muted); text-align:right; flex-shrink:0;">instrumentalness</span>
-          <div style="flex:1; background:var(--surface); border-radius:2px; height:22px; position:relative;">
-            <div style="width:18%; background:#e05252; height:100%; border-radius:2px; margin-left:auto;"></div>
-            <span style="position:absolute; right:8px; top:3px; color:var(--muted); font-size:0.75rem;">−0.18</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- RESULTS -->
-<section id="results">
-  <p class="section-label">Model Results</p>
-  <h2>Four Models, One Clear Winner</h2>
-  <p>All models were trained on an 80/20 train-test split and evaluated using R² and RMSE. None showed significant overfitting (train/test gap &lt; 0.03).</p>
-
-  <div class="two-col" style="margin-top:2.5rem; align-items:start;">
-    <div class="chart-wrap">
-      <canvas id="modelChart"></canvas>
-    </div>
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Test R²</th>
-            <th>RMSE</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>LR — Baseline</td>
-            <td>0.47</td>
-            <td>15.77</td>
-          </tr>
-          <tr>
-            <td>LR — Artist + Year</td>
-            <td>0.86</td>
-            <td>8.09</td>
-          </tr>
-          <tr class="winner">
-            <td>Random Forest <span class="badge">Best</span></td>
-            <td>0.88</td>
-            <td>7.59</td>
-          </tr>
-          <tr>
-            <td>XGBoost</td>
-            <td>0.87</td>
-            <td>7.71</td>
-          </tr>
-        </tbody>
-      </table>
-      <p style="margin-top:1rem; font-size:0.82rem; color:var(--green);">✓ No overfitting: train/test gap &lt; 0.03 across all models</p>
-    </div>
-  </div>
-
-  <!-- Feature importance -->
-  <div style="margin-top:4rem;">
-    <p class="section-label">Feature Importance (Random Forest)</p>
-    <h2>What Actually Drives Popularity?</h2>
-    <p>97% of the model's predictive power comes from just two features. All 13 audio features combined account for only ~3%.</p>
-    <div class="insight-grid">
-      <div class="insight-card">
-        <div class="pct">97%</div>
-        <p>of predictive power from <strong style="color:var(--white);">year of release + artist popularity</strong> alone.</p>
-      </div>
-      <div class="insight-card dim-top">
-        <div class="pct">~3%</div>
-        <p>from all 13 audio features combined — danceability, energy, tempo, valence, and more.</p>
-      </div>
-    </div>
-    <p style="margin-top:1.5rem; font-style:italic; font-size:0.875rem;">
-      Sound matters less than brand. A great-sounding song from an unknown artist will almost always underperform a mediocre one from a superstar.
+<!-- ═══════════════════════════════════════════════════════ SUMMARY -->
+<section id="summary">
+  <p class="section-label">Executive Summary</p>
+  <h2>The Surprise Finding: Sound Doesn't Drive Popularity</h2>
+  <div class="prose">
+    <p>
+      This project builds a machine learning model to predict the popularity of Spotify tracks,
+      scored 0–100 by Spotify's algorithm. Using a dataset of 169,909 tracks spanning 1921–2020,
+      the goal was to identify what actually drives streaming popularity — and what does not.
+    </p>
+    <p>
+      Five models were trained and evaluated: Dummy Regressor, Linear Regression, Random Forest,
+      and XGBoost (default and tuned). The best-performing model is <strong>XGBoost with default
+      parameters</strong>, achieving RMSE = 9.65 and R² = 0.72 on a held-out test set of 28,511 tracks.
+      Hyperparameter tuning via RandomizedSearchCV (50 iterations, 3-fold CV) produced no meaningful
+      improvement — tuned RMSE = 9.72, confirming that default parameters are near-optimal for this dataset.
+    </p>
+    <p>
+      The most important finding is not the model's accuracy but what it reveals about popularity itself:
+      <strong>release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
+      of the model's predictive weight</strong>. All 13 audio features — danceability, energy, loudness,
+      acousticness, valence, tempo, and more — contribute less than 3% combined. A great-sounding song
+      from an unknown artist will almost always underperform a mediocre track from an established star.
+    </p>
+    <p>
+      For Spotify, which paid approximately $9B in royalties in 2023 (~70% of total revenue), this finding
+      has direct commercial implications: royalty rates set against audio quality are set against the wrong
+      signal. The dominant drivers of popularity — artist reputation and release timing — are knowable
+      before a contract is signed.
     </p>
   </div>
 </section>
 
 <hr class="divider" />
 
-<!-- NOTEBOOKS -->
-<section id="notebooks">
-  <p class="section-label">Code</p>
-  <h2>Notebooks</h2>
-  <p>All analysis is documented in Jupyter notebooks. Click any to view on GitHub.</p>
-  <div class="notebook-grid">
-    <a class="notebook-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb">
-      <div class="nb-num">Notebook</div>
-      <div class="nb-title">Spotify Hit Predictor</div>
-      <div class="nb-desc">Full analysis in a single notebook. EDA, feature engineering, and model comparison across Dummy Regressor, Linear Regression, Random Forest, and XGBoost. Best model: XGBoost, RMSE = 9.65, R² = 0.72.</div>
-    </a>
+
+<!-- ═══════════════════════════════════════════════════════ DATASET -->
+<section id="dataset">
+  <p class="section-label">Dataset &amp; Data Cleaning</p>
+  <h2>169,909 Tracks, Zero Missing Values, One Major Decision</h2>
+  <div class="prose">
+    <p>
+      The dataset was sourced from Kaggle and contains tracks pulled from the <strong>Spotify Web API</strong>,
+      covering releases from 1921 to 2020. Each of the 169,909 rows represents a unique Spotify track ID and
+      contains 19 columns: nine continuous audio features (acousticness, danceability, energy, instrumentalness,
+      liveness, loudness, speechiness, tempo, valence), four categorical columns (artists, id, name, release_date),
+      the binary <em>explicit</em> flag, musical key, mode, duration, year, and the target variable <em>popularity</em>.
+    </p>
+    <p>
+      A full quality check confirmed <strong>zero missing values</strong> across all 169,909 rows. No imputation
+      was required. The only cleaning decision of consequence was handling zero-popularity tracks.
+    </p>
+  </div>
+
+  <div class="two-col" style="margin-top:2.5rem;">
+    <div class="finding-card">
+      <p class="label">Tracks removed from dataset</p>
+      <div class="big-num">27,357</div>
+      <p style="color:var(--off); margin:0; font-size:0.9rem;">
+        16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
+        insufficient streaming data — not that the song was heard and disliked. Including
+        these would add noise to the target without representing genuine listening behaviour.
+        All tracks with popularity ≥ 1 were retained: <strong style="color:var(--green);">142,552 active tracks</strong>.
+      </p>
+    </div>
+    <div>
+      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem;">Dataset at a glance</h3>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">Raw tracks</span>
+          <span style="font-weight:700; color:var(--white);">169,909</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">After removing zero-popularity</span>
+          <span style="font-weight:700; color:var(--green);">142,552</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">Year range</span>
+          <span style="font-weight:700; color:var(--white);">1921 – 2020</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">Missing values</span>
+          <span style="font-weight:700; color:var(--green);">0</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">Training set (80%)</span>
+          <span style="font-weight:700; color:var(--white);">114,041</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--muted);">Test set (20%)</span>
+          <span style="font-weight:700; color:var(--white);">28,511</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:2rem;">
+    <p>
+      <strong>Re-releases retained:</strong> 9,904 songs appear more than once in the dataset with unique Spotify IDs,
+      representing remasters, re-issues, or alternate album versions — 21,473 tracks total.
+      The average popularity spread across versions of the same song is 13.6 points; the maximum is 86 points.
+      All versions are retained because each is a distinct Spotify product with its own streaming history,
+      and <em>year</em> is included as a feature to allow the model to distinguish between them.
+    </p>
   </div>
 </section>
 
 <hr class="divider" />
 
-<!-- APP -->
+
+<!-- ═══════════════════════════════════════════════════════ EDA -->
+<section id="eda">
+  <p class="section-label">Exploratory Data Analysis</p>
+  <h2>Six Key Findings Before Modelling</h2>
+  <div class="prose">
+    <p>
+      EDA was structured around the target variable: which features correlate with popularity and why?
+      The analysis reveals that popularity is driven almost entirely by structural factors, not audio quality.
+    </p>
+  </div>
+
+  <div class="two-col" style="margin-top:3rem;">
+    <div>
+      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.25rem;">Pearson Correlation with Popularity</h3>
+      <div class="corr-chart">
+        <div class="corr-row">
+          <span class="corr-label">year</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:82%;"></div><span class="corr-val">0.82</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">artist_avg_pop ✦</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:72%;"></div><span class="corr-val">0.72</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">loudness</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:41%; background:#5b8dee;"></div><span class="corr-val">0.41</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">energy</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:38%; background:#5b8dee;"></div><span class="corr-val">0.38</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">explicit</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:29%; background:#5b8dee;"></div><span class="corr-val">0.29</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">danceability</span>
+          <div class="corr-track"><div class="corr-fill-pos" style="width:22%; background:#5b8dee;"></div><span class="corr-val">0.22</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">instrumentalness</span>
+          <div class="corr-track"><div class="corr-fill-neg" style="width:18%;"></div><span class="corr-val">-0.18</span></div>
+        </div>
+        <div class="corr-row">
+          <span class="corr-label">acousticness</span>
+          <div class="corr-track"><div class="corr-fill-neg" style="width:47%;"></div><span class="corr-val">-0.47</span></div>
+        </div>
+      </div>
+      <p class="corr-note">✦ Engineered feature (Section: Feature Engineering). Green = structural predictors. Blue = audio features. Red = negative correlation.</p>
+    </div>
+
+    <div class="eda-findings">
+      <div class="eda-finding">
+        <span class="eda-num">1</span>
+        <div class="eda-content">
+          <h3>Year dominates: r = 0.82</h3>
+          <p>Release year is the strongest raw predictor — 2x stronger than the next-best audio feature (loudness, r = 0.41). This is structural: <span class="stat-inline">Spotify's popularity score reflects recent streaming activity</span>, so newer tracks systematically score higher. Decade averages climb from 7 (1920s) to 66 (2020s). This is recency bias, not song quality.</p>
+        </div>
+      </div>
+      <div class="eda-finding">
+        <span class="eda-num">2</span>
+        <div class="eda-content">
+          <h3>Audio features are weak individually</h3>
+          <p>Among the 13 raw audio features, acousticness (r = -0.47) and loudness (r = 0.41) show the strongest correlations. All others fall below |r| = 0.40. Tempo, liveness, speechiness, valence, and key are all below |r| = 0.09. Once year and artist context are added to the model, audio contributes <span class="stat-inline">less than 3%</span> of predictive weight.</p>
+        </div>
+      </div>
+      <div class="eda-finding">
+        <span class="eda-num">3</span>
+        <div class="eda-content">
+          <h3>Explicit tracks average 18.5 points higher</h3>
+          <p><span class="stat-inline">12,357 explicit tracks</span> (8.7% of the dataset) average popularity 54.5. The 130,195 clean tracks average 36.0. This reflects genre concentration: explicit content is disproportionately associated with hip-hop and R&amp;B, which dominate recent streaming charts rather than being an independent quality signal.</p>
+        </div>
+      </div>
+      <div class="eda-finding">
+        <span class="eda-num">4</span>
+        <div class="eda-content">
+          <h3>Popularity is right-skewed, mean = 37.6</h3>
+          <p>After removing zero-popularity tracks, the distribution has mean = 37.6, median = 38.0, std = 18.1. Fewer tracks achieve high popularity (80–100) than mid-range (20–60). No transformation was applied: tree-based models are robust to skewed targets.</p>
+        </div>
+      </div>
+      <div class="eda-finding">
+        <span class="eda-num">5</span>
+        <div class="eda-content">
+          <h3>Re-releases vary by up to 86 popularity points</h3>
+          <p>The same song released in different years can score dramatically differently. Average spread across re-releases is <span class="stat-inline">13.6 points</span>; maximum is 86 points. This confirms year as a meaningful feature beyond just recency bias — it distinguishes real versions of the same track.</p>
+        </div>
+      </div>
+      <div class="eda-finding">
+        <span class="eda-num">6</span>
+        <div class="eda-content">
+          <h3>Top artists outperform bottom artists by 77 points</h3>
+          <p>Among 2,705 artists with 10 or more tracks, Billie Eilish (78.8), Harry Styles (77.0), and Lewis Capaldi (76.9) rank highest. Bottom-ranked artists (primarily pre-1950s classical) average below 1.5. This 77-point spread motivates <span class="stat-inline">artist_avg_popularity</span> as an engineered feature.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ FEATURE ENG + PREPROCESSING -->
+<section id="preprocessing">
+  <p class="section-label">Feature Engineering &amp; Pre-Processing</p>
+  <h2>One Engineered Feature Drives Almost All Model Performance</h2>
+  <div class="prose">
+    <p>
+      Feature engineering was performed on the training set only and applied to the test set to prevent
+      data leakage. The split (80/20, random_state=42) was performed before any transformation.
+    </p>
+    <p>
+      The most impactful step was engineering <strong>artist_avg_popularity</strong>: the mean popularity
+      of each artist's top-3 tracks, computed from training data only. Unseen artists receive a fallback
+      value of 44.09 (training mean). This single feature achieves r = 0.72 with the target and is
+      computable from Spotify's API before a contract is signed, making it the most actionable
+      pre-contract signal in the entire model.
+    </p>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-num">Step 01</div>
+      <h3>Drop identity columns</h3>
+      <p>Remove id, name, release_date, decade — these do not generalise and would leak information.</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Step 02 ✦</div>
+      <h3>Engineer artist_avg_popularity</h3>
+      <p>Mean of artist's top-3 track popularities, from train set only. Fallback = 44.09 for unseen artists. Achieves r = 0.72.</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Step 03</div>
+      <h3>One-hot encode key</h3>
+      <p>Musical key (0–11) encoded to 11 binary columns using pd.get_dummies (drop_first=True to avoid multicollinearity).</p>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">Step 04</div>
+      <h3>StandardScaler for LR only</h3>
+      <p>Numeric features scaled before Linear Regression only. Fit on X_train, applied to X_test. Tree models receive unscaled inputs.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1.5rem;">
+    <p>
+      <strong>Final feature set: 25 columns.</strong>
+      Numeric: acousticness, danceability, duration_ms, energy, explicit, instrumentalness, liveness, loudness, mode,
+      speechiness, tempo, valence, year, artist_avg_popularity (14 features).
+      One-hot encoded key: key_1 through key_11 (11 features).
+      LabelEncoder was not used. StandardScaler was not applied to OHE columns.
+    </p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ MODEL -->
+<section id="model">
+  <p class="section-label">Modelling Results</p>
+  <h2>Five Models, One Clear Winner</h2>
+  <div class="prose">
+    <p>
+      All models were evaluated on the same held-out test set (28,511 tracks). RMSE is reported as a
+      percentage of mean popularity (37.6) to contextualise magnitude. A train/test RMSE gap of less
+      than 1 point indicates the model generalises well without overfitting.
+    </p>
+  </div>
+
+  <div class="two-col" style="margin-top:2.5rem;">
+    <div class="chart-wrap" style="margin-top:0;">
+      <canvas id="modelChart"></canvas>
+    </div>
+    <div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Test R²</th>
+              <th>RMSE</th>
+              <th>RMSE %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dummy Regressor</td>
+              <td>0.00</td>
+              <td>18.17</td>
+              <td>48.2%</td>
+            </tr>
+            <tr>
+              <td>Linear Regression</td>
+              <td>0.70</td>
+              <td>10.02</td>
+              <td>26.6%</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td>
+              <td>0.71</td>
+              <td>9.77</td>
+              <td>25.9%</td>
+            </tr>
+            <tr class="winner">
+              <td>XGBoost (Default) <span class="badge">Best</span></td>
+              <td>0.72</td>
+              <td>9.65</td>
+              <td>25.6%</td>
+            </tr>
+            <tr>
+              <td>XGBoost (Tuned)</td>
+              <td>0.71</td>
+              <td>9.72</td>
+              <td>25.8%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:1rem; font-size:0.82rem; color:var(--green);">✓ Train/test RMSE gap &lt; 1 point across all models — no meaningful overfitting</p>
+      <p style="font-size:0.82rem; color:var(--muted);">
+        Hyperparameter tuning (RandomizedSearchCV, 50 iterations, 3-fold CV) achieved CV RMSE = 8.74 but test RMSE = 9.72,
+        worse than the default model (9.65). The tuned model overfit to the CV fold distribution.
+        Default XGBoost was selected as the final model.
+      </p>
+    </div>
+  </div>
+
+  <!-- Feature importance -->
+  <div style="margin-top:4rem;">
+    <p class="section-label">Feature Importance (XGBoost)</p>
+    <h2>97% of Predictions Come from Two Variables</h2>
+    <div class="prose">
+      <p>
+        XGBoost feature importance confirms what correlation analysis suggested: year and artist_avg_popularity
+        together account for approximately 97% of the model's predictive weight. All 13 audio features
+        combined contribute less than 3%. This is not a model limitation — it reflects a genuine property
+        of how Spotify's popularity algorithm is constructed.
+      </p>
+    </div>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="pct">~70%</div>
+        <p>of model weight from <strong style="color:var(--white);">year of release</strong> alone. Release year captures Spotify's recency bias and re-release effects simultaneously.</p>
+      </div>
+      <div class="insight-card">
+        <div class="pct">~27%</div>
+        <p>from <strong style="color:var(--white);">artist_avg_popularity</strong> — the engineered feature. Computable from Spotify's API before any contract is signed.</p>
+      </div>
+      <div class="insight-card dim-top">
+        <div class="pct" style="font-size:2rem; color:var(--muted);">&lt; 3%</div>
+        <p>from all 13 audio features combined — danceability, energy, loudness, acousticness, tempo, valence, and more.</p>
+      </div>
+      <div class="insight-card dim-top">
+        <div class="pct" style="font-size:2rem; color:var(--muted);">RMSE = 9.65</div>
+        <p>Predictions are off by an average of <strong style="color:var(--white);">9.65 popularity points</strong> on a 0–100 scale — 25.6% relative error on mean popularity of 37.6.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ BUSINESS -->
+<section id="business">
+  <p class="section-label">Business Implications</p>
+  <h2>What This Means for Spotify's Royalty Risk</h2>
+  <div class="prose">
+    <p>
+      Spotify paid approximately $9B in royalties in 2023, representing roughly 70% of total revenue.
+      Royalty rates are negotiated before release against unknown future performance. The model's findings
+      identify three concrete implications for how those rates should be assessed.
+    </p>
+  </div>
+
+  <div class="biz-grid">
+    <div class="biz-card">
+      <div class="biz-num">1</div>
+      <div class="biz-content">
+        <h3>Low predicted popularity + premium rate = quantifiable financial risk</h3>
+        <p>
+          Artist average popularity is computable from Spotify data before a contract is signed and
+          achieves r = 0.72 with actual track popularity. A model score below 30 for an artist receiving
+          a premium royalty rate identifies a systematic overpayment risk — the track is structurally
+          unlikely to generate the streams needed to justify the rate. This makes artist_avg_popularity
+          the most actionable pre-contract screening metric available.
+        </p>
+      </div>
+    </div>
+    <div class="biz-card">
+      <div class="biz-num">2</div>
+      <div class="biz-content">
+        <h3>Marketing is the unmodelled driver that warrants further investigation</h3>
+        <p>
+          The model explains 72% of popularity variance using only historical data. The remaining 28% —
+          the part the model cannot capture — likely includes playlist placements, editorial picks,
+          social media campaigns, and sync licensing. These marketing signals are not in the dataset but
+          are the mechanisms through which popularity is actively manufactured rather than passively
+          observed. Quantifying their marginal contribution would materially improve royalty risk modelling.
+        </p>
+      </div>
+    </div>
+    <div class="biz-card dim">
+      <div class="biz-num" style="color:var(--muted);">3</div>
+      <div class="biz-content">
+        <h3>Spotify's editorial activity creates leverage to promote lower-premium artists</h3>
+        <p>
+          If Spotify's own playlist curation and editorial activity are a primary driver of popularity
+          (captured in the unexplained 28%), then Spotify has direct influence over which artists become
+          popular. This creates a structural opportunity: by directing editorial support to artists on
+          lower royalty rates, Spotify can improve streaming revenue per payout dollar. The platform
+          is not a passive marketplace — it is an active participant in the popularity it then pays for.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ LIMITATIONS -->
+<section id="limitations">
+  <p class="section-label">Limitations</p>
+  <h2>What the Model Cannot Tell You</h2>
+  <div class="prose">
+    <p>
+      R² = 0.72 is a meaningful result, but it is important to be clear about what the remaining 28%
+      represents and where the model's boundaries lie.
+    </p>
+  </div>
+  <div class="limit-grid">
+    <div class="limit-card">
+      <div class="limit-num">01</div>
+      <h3>Static 2021 snapshot: popularity decay is unmodelled</h3>
+      <p>Popularity scores decay as streaming attention shifts to newer releases. The model uses scores captured at a single point in time. It systematically underestimates tracks that gained streams after 2021 and overestimates older catalogue whose rates have since declined.</p>
+    </div>
+    <div class="limit-card">
+      <div class="limit-num">02</div>
+      <h3>Year correlation is structural, not causal</h3>
+      <p>The r = 0.82 correlation between year and popularity reflects Spotify's recency-weighted scoring algorithm, not evidence that newer music is inherently better. A song from 2015 is not more popular than one from 1980 because it is higher quality — it is more popular because Spotify's algorithm prioritises recent streaming counts.</p>
+    </div>
+    <div class="limit-card">
+      <div class="limit-num">03</div>
+      <h3>Spotify-only measure: cross-platform behaviour not captured</h3>
+      <p>A track viral on TikTok, YouTube, or Apple Music may show low Spotify popularity in the training data. The model cannot generalise to overall commercial success — only to Spotify-specific streaming at one point in time.</p>
+    </div>
+    <div class="limit-card">
+      <div class="limit-num">04</div>
+      <h3>No genre labels: audio proxies are incomplete</h3>
+      <p>The dataset contains no genre column. Audio features act as imperfect genre proxies, which is why the explicit flag carries disproportionate weight — it is the closest available signal for hip-hop and R&amp;B concentration. A genre label would likely absorb most of this effect cleanly.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ APP -->
 <section id="app">
   <p class="section-label">Interactive Tool</p>
-  <h2>Spotify Hit Predictor App</h2>
-  <p>A Streamlit app that lets you predict a track's popularity score in real time. Type an artist name and adjust audio feature sliders — the Random Forest model returns an instant prediction.</p>
+  <h2>Spotify Hit Predictor: Live App</h2>
+  <div class="prose">
+    <p>
+      A Streamlit application deployed on AWS lets you predict a track's popularity score in real time.
+      Type any artist name and the app retrieves their historical average popularity from the training data.
+      Adjust audio feature sliders to simulate different track configurations. The XGBoost model returns
+      an instant predicted popularity score (0–100) with a breakdown of which inputs drove the result.
+    </p>
+  </div>
 
   <div class="app-features">
     <div class="app-feature">
       <h3>Artist Lookup</h3>
-      <p>Type any artist — the model retrieves their historical popularity to inform the score.</p>
+      <p>Type any artist name — the model retrieves their avg_popularity from training data to anchor the prediction.</p>
     </div>
     <div class="app-feature">
       <h3>Audio Sliders</h3>
-      <p>Adjust danceability, energy, valence, tempo and more in real time.</p>
+      <p>Adjust danceability, energy, loudness, acousticness, valence, tempo and more in real time.</p>
     </div>
     <div class="app-feature">
       <h3>Instant Prediction</h3>
-      <p>Random Forest model returns a predicted popularity score (0–100) instantly.</p>
+      <p>XGBoost model returns a predicted popularity score (0–100) instantly on every input change.</p>
     </div>
     <div class="app-feature">
-      <h3>Feature Importance</h3>
-      <p>Built-in chart shows which inputs drove the prediction — transparent and explainable.</p>
+      <h3>AWS Deployment</h3>
+      <p>App is containerised and deployed on AWS for persistent availability beyond local development.</p>
     </div>
   </div>
 
@@ -421,38 +785,86 @@
       <span class="pill">Streamlit</span>
       <span class="pill">Plotly</span>
       <span class="pill">NumPy</span>
+      <span class="pill">statsmodels</span>
+      <span class="pill">AWS EC2</span>
+      <span class="pill">Jupyter</span>
     </div>
   </div>
 </section>
 
 <hr class="divider" />
 
-<!-- FOOTER -->
+
+<!-- ═══════════════════════════════════════════════════════ CODE & RESOURCES -->
+<section id="code">
+  <p class="section-label">Code &amp; Resources</p>
+  <h2>Notebook, Deck &amp; Source</h2>
+  <div class="prose">
+    <p>
+      All analysis is fully documented and reproducible. The notebook covers EDA, feature engineering,
+      pre-processing, five model comparisons, hyperparameter tuning, and conclusions in a single file.
+      The presentation deck contains the same findings in slide format.
+    </p>
+  </div>
+
+  <div class="resource-grid">
+    <a class="resource-card" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb" target="_blank">
+      <div class="rc-type">Jupyter Notebook</div>
+      <div class="rc-title">Spotify Hit Predictor</div>
+      <div class="rc-desc">Full analysis: EDA, feature engineering, pre-processing pipeline, 5-model comparison, hyperparameter tuning, and conclusions. View on GitHub →</div>
+    </a>
+    <a class="resource-card" href="Spotify_HitPredictor_Final_v4.pptx" download>
+      <div class="rc-type">Presentation Deck</div>
+      <div class="rc-title">Capstone Slide Deck</div>
+      <div class="rc-desc">16-slide PPTX covering dataset, EDA, feature engineering, pre-processing, model comparison, key findings, business implications, and limitations. Download →</div>
+    </a>
+    <a class="resource-card" href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">
+      <div class="rc-type">GitHub Repository</div>
+      <div class="rc-title">Full Source Code</div>
+      <div class="rc-desc">Notebooks, Python scripts, Streamlit app code, requirements.txt, and dataset. View on GitHub →</div>
+    </a>
+    <a class="resource-card" href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">
+      <div class="rc-type">Live Application</div>
+      <div class="rc-title">Hit Predictor App</div>
+      <div class="rc-desc">Interactive Streamlit app deployed on AWS. Enter an artist, set audio feature sliders, get an instant popularity prediction. Launch →</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ═══════════════════════════════════════════════════════ FOOTER -->
 <footer>
   <p style="color:var(--muted); margin-bottom:0.5rem;">
-    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial College London — Data Science Programme &nbsp;·&nbsp; 2026
+    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial Executive Education — Data Science Programme &nbsp;·&nbsp; 2026
   </p>
   <p>
-    <a href="https://github.com/cagla-akin/spotify-ml-capstone">GitHub</a>
+    <a href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
     &nbsp;·&nbsp;
-    <a href="https://github.com/cagla-akin/spotify-ml-capstone">GitHub</a>
+    <a href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb" target="_blank">Notebook</a>
+    &nbsp;·&nbsp;
+    <a href="Spotify_HitPredictor_Final_v4.pptx" download>Download Deck</a>
   </p>
 </footer>
 
-<!-- CHART.JS -->
+
+<!-- ═══════════════════════════════════════════════════════ CHART.JS -->
 <script>
   const ctx = document.getElementById('modelChart').getContext('2d');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['LR Baseline', 'LR + Artist & Year', 'Random Forest', 'XGBoost'],
-      datasets: [{
-        label: 'Test R²',
-        data: [0.4675, 0.8599, 0.8765, 0.8728],
-        backgroundColor: ['#4A90D9', '#7B68EE', '#1DB954', '#F5A623'],
-        borderRadius: 3,
-        borderSkipped: false,
-      }]
+      labels: ['Dummy', 'Linear Reg.', 'Random Forest', 'XGBoost\n(Default)', 'XGBoost\n(Tuned)'],
+      datasets: [
+        {
+          label: 'Test R²',
+          data: [0.00, 0.6955, 0.7109, 0.7178, 0.7099],
+          backgroundColor: ['#535353', '#5b8dee', '#5b8dee', '#1DB954', '#444444'],
+          borderRadius: 3,
+          borderSkipped: false,
+        }
+      ]
     },
     options: {
       responsive: true,
@@ -462,14 +874,19 @@
           callbacks: {
             label: ctx => ' R² = ' + ctx.parsed.y.toFixed(4)
           }
-        }
+        },
+        annotation: {}
       },
       scales: {
-        x: { grid: { color: '#333' }, ticks: { color: '#9a9a9a', font: { size: 11 } } },
+        x: {
+          grid: { color: '#2a2a2a' },
+          ticks: { color: '#9a9a9a', font: { size: 11 }, maxRotation: 0 }
+        },
         y: {
-          min: 0, max: 1,
-          grid: { color: '#333' },
-          ticks: { color: '#9a9a9a', font: { size: 11 } }
+          min: 0, max: 0.85,
+          grid: { color: '#2a2a2a' },
+          ticks: { color: '#9a9a9a', font: { size: 11 } },
+          title: { display: true, text: 'R²', color: '#9a9a9a', font: { size: 11 } }
         }
       }
     }
