@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What Makes a Song Popular? — Çağla Akın</title>
+  <title>What Makes a Song Popular?,Çağla Akın</title>
   <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,7 +40,7 @@
       padding: 0 2rem; height: 58px;
     }
     .nav-logo { color: var(--green); font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-    .nav-logo .nav-sub { color: var(--dim); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.03em; padding-left: 0.5rem; border-left: 1px solid var(--dim); margin-left: 0.25rem; }
+    .nav-logo .nav-sub { color: var(--green); font-weight: 400; font-size: 0.72rem; letter-spacing: 0.03em; padding-left: 0.5rem; border-left: 1px solid var(--green-dim); margin-left: 0.25rem; opacity: 0.75; }
     .nav-links { display: flex; gap: 1.75rem; list-style: none; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color .2s; }
     .nav-links a:hover { color: var(--white); }
@@ -237,7 +237,7 @@
   <a class="nav-logo" href="#">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
     Spotify Hit Predictor
-    <span class="nav-sub">Imperial College London · 2026</span>
+    <span class="nav-sub">Imperial College London | Executive Education in Data Science · 2026</span>
   </a>
   <ul class="nav-links">
     <li><a href="#summary">Summary</a></li>
@@ -251,7 +251,6 @@
 
 <!-- ═══════════════════════════════════════════════════════ HERO -->
 <section id="hero">
-  <p class="section-label">Imperial College London · Executive Education in Data Science · Capstone Project</p>
   <h1>What Makes a Song<br><span>Popular?</span></h1>
   <p class="subtitle">
     Predicting Spotify track popularity using machine learning on 169,909 tracks
@@ -263,7 +262,7 @@
     <a class="btn btn-outline" href="Spotify_HitPredictor_Final_v4.pptx" download>Download Deck</a>
     <a class="btn btn-outline" href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
   </div>
-  <p class="meta">By <span>Çağla Akın</span> &nbsp;·&nbsp; Dataset: <span>169,909 Spotify tracks (Kaggle / Spotify API)</span> &nbsp;·&nbsp; Tools: <span>Python · scikit-learn · XGBoost · Streamlit · AWS</span></p>
+  <p class="meta">By <span>Çağla Akın</span> &nbsp;·&nbsp; Dataset: <span>169,909 Spotify tracks (Imperial College London Case Study / Spotify API)</span> &nbsp;·&nbsp; Tools: <span>Python · scikit-learn · XGBoost · Streamlit · AWS</span></p>
 
   <div class="stat-grid">
     <div class="stat-card">
@@ -295,27 +294,27 @@
   <div class="prose">
     <p>
       This project builds a machine learning model to predict the popularity of Spotify tracks,
-      scored 0–100 by Spotify's algorithm. Using a dataset of 169,909 tracks spanning 1921–2020,
-      the goal was to identify what actually drives streaming popularity and what does not.
+      scored 0–100 by Spotify's own algorithm. Working with a dataset of 169,909 tracks spanning 1921–2020,
+      the goal was straightforward: figure out what actually drives streaming popularity and what does not.
     </p>
     <p>
       Five models were trained and evaluated: Dummy Regressor, Linear Regression, Random Forest,
-      and XGBoost (default and tuned). The best-performing model is <strong>XGBoost with default
+      and XGBoost in both default and tuned configurations. The best-performing model is <strong>XGBoost with default
       parameters</strong>, achieving RMSE = 9.65 and R² = 0.72 on a held-out test set of 28,511 tracks.
       Hyperparameter tuning via RandomizedSearchCV (50 iterations, 3-fold CV) produced no improvement;
-      the tuned model scored RMSE = 9.72, confirming that default parameters are near-optimal for this dataset.
+      the tuned model scored RMSE = 9.72, confirming that default parameters are already well-calibrated for this dataset.
     </p>
     <p>
-      The most important finding is not the model's accuracy but what it reveals about popularity itself:
-      <strong>release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
-      of the model's predictive weight</strong>. All 13 audio features — danceability, energy, loudness,
-      acousticness, valence, tempo, and more — contribute less than 3% combined. A song from an unknown
-      artist will almost always underperform a track from an established star, regardless of audio quality.
+      The most important finding is not how accurate the model is, but what it tells us about popularity itself.
+      <strong>Release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
+      of the model's predictive weight.</strong> All 13 audio features, danceability, energy, loudness,
+      acousticness, valence, tempo, and more, contribute less than 3% combined. A song from an unknown
+      artist will almost always underperform a track from an established name, regardless of how good it sounds.
     </p>
     <p>
-      For Spotify, which paid $11B in royalties in 2025, this finding has direct commercial implications:
-      artist reputation is measurable before a contract is signed, while release year reflects a structural
-      artifact of how Spotify scores tracks — not a lever either party can pull.
+      For Spotify, which paid $11B in royalties in 2025, this has real commercial weight.
+      Artist reputation is measurable before a contract is signed. Release year, on the other hand,
+      is a structural artifact of how Spotify constructs its popularity score, not something either party can control.
     </p>
   </div>
 </section>
@@ -380,7 +379,7 @@
         <div class="big-num">27,357</div>
         <p style="color:var(--off); margin:0; font-size:0.9rem;">
           16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
-          insufficient streaming data — not that the song was heard and disliked. Including
+          insufficient streaming data,not that the song was heard and disliked. Including
           these would add noise to the target without representing genuine listening behaviour.
           All tracks with popularity ≥ 1 were retained: <strong style="color:var(--green);">142,552 active tracks</strong>.
         </p>
@@ -389,8 +388,8 @@
         <p class="label">Re-releases retained</p>
         <div class="big-num">9,904</div>
         <p style="color:var(--off); margin:0; font-size:0.9rem;">
-          songs appear more than once with unique Spotify IDs — remasters, re-issues, or alternate
-          album versions — involving <strong style="color:var(--green);">21,473 tracks total</strong>.
+          songs appear more than once with unique Spotify IDs,remasters, re-issues, or alternate
+          album versions,involving <strong style="color:var(--green);">21,473 tracks total</strong>.
           Popularity spread across versions averages 13.6 points; the maximum for a single song is 86 points.
           All versions are retained as each is a distinct Spotify product with its own streaming history.
         </p>
@@ -451,7 +450,7 @@
         </div>
       </div>
       <p class="corr-note">
-        ✦ Engineered feature — computed from training data only, not a raw Spotify variable.<br>
+        ✦ Engineered feature,computed from training data only, not a raw Spotify variable.<br>
         Green bars = structural predictors (year, artist reputation).<br>
         Blue bars = audio features. Red bars = negative correlation.
       </p>
@@ -490,7 +489,7 @@
         <span class="eda-num">5</span>
         <div class="eda-content">
           <h3>Re-releases vary by up to 86 popularity points</h3>
-          <p>The same song released in different years can score differently. Average spread across re-releases is <span class="stat-inline">13.6 points</span>; the maximum is 86 points. This confirms year as a meaningful feature beyond recency bias — it distinguishes real versions of the same track.</p>
+          <p>The same song released in different years can score differently. Average spread across re-releases is <span class="stat-inline">13.6 points</span>; the maximum is 86 points. This confirms year as a meaningful feature beyond recency bias,it distinguishes real versions of the same track.</p>
         </div>
       </div>
       <div class="eda-finding">
@@ -555,7 +554,7 @@
 
   <div class="callout" style="margin-top:1rem; background: rgba(255,255,255,0.03); border-color: var(--dim);">
     <p style="color: var(--muted);">
-      <strong style="color:var(--off);">Data leakage prevention:</strong> The train/test split (80/20, random_state=42) was performed on the raw cleaned dataset before any feature engineering. All transformations — artist average computation, one-hot encoding, and scaling — were fit exclusively on the training set and applied to the test set.
+      <strong style="color:var(--off);">Data leakage prevention:</strong> The train/test split (80/20, random_state=42) was performed on the raw cleaned dataset before any feature engineering. All transformations,artist average computation, one-hot encoding, and scaling,were fit exclusively on the training set and applied to the test set.
     </p>
   </div>
 </section>
@@ -644,7 +643,7 @@
   <!-- Hyperparameter tuning -->
   <div class="tuning-callout">
     <div class="tuning-label">Hyperparameter Tuning</div>
-    <h3>RandomizedSearchCV: 50 iterations, 3-fold CV, 6 parameters — no improvement over default</h3>
+    <h3>RandomizedSearchCV: 50 iterations, 3-fold CV, 6 parameters,no improvement over default</h3>
     <p>
       XGBoost's default parameters were tested against a randomised grid covering
       <strong>n_estimators</strong> (100–500), <strong>max_depth</strong> (3–7),
@@ -665,7 +664,7 @@
       <p>
         XGBoost feature importance confirms what correlation analysis suggested: year and artist_avg_popularity
         together account for approximately 97% of the model's predictive weight. All 13 audio features
-        combined contribute less than 3%. This is not a model limitation — it reflects a genuine property
+        combined contribute less than 3%. This is not a model limitation,it reflects a genuine property
         of how Spotify's popularity algorithm is constructed.
       </p>
     </div>
@@ -676,15 +675,15 @@
       </div>
       <div class="insight-card">
         <div class="pct">~27%</div>
-        <p>from <strong style="color:var(--white);">artist_avg_popularity</strong> — the engineered feature. Computable from Spotify's API before any contract is signed.</p>
+        <p>from <strong style="color:var(--white);">artist_avg_popularity</strong>,the engineered feature. Computable from Spotify's API before any contract is signed.</p>
       </div>
       <div class="insight-card dim-top">
         <div class="pct" style="font-size:2rem; color:var(--muted);">&lt; 3%</div>
-        <p>from all 13 audio features combined — danceability, energy, loudness, acousticness, tempo, valence, and more.</p>
+        <p>from all 13 audio features combined,danceability, energy, loudness, acousticness, tempo, valence, and more.</p>
       </div>
       <div class="insight-card dim-top">
         <div class="pct" style="font-size:2rem; color:var(--muted);">RMSE = 9.65</div>
-        <p>Predictions are off by an average of <strong style="color:var(--white);">9.65 popularity points</strong> on a 0–100 scale — 25.6% relative error on mean popularity of 37.6.</p>
+        <p>Predictions are off by an average of <strong style="color:var(--white);">9.65 popularity points</strong> on a 0–100 scale,25.6% relative error on mean popularity of 37.6.</p>
       </div>
     </div>
   </div>
@@ -758,8 +757,10 @@
   <h2>What the Model Cannot Tell You</h2>
   <div class="prose">
     <p>
-      R² = 0.72 is a meaningful result, but it is important to be clear about what the remaining 28%
-      represents and where the model's boundaries lie.
+      R² = 0.72 is a strong result, but popularity on Spotify is partly an internally constructed score
+      shaped by the platform's own algorithms and editorial decisions. That means some of what drives
+      a track's number is simply not visible in the data available here. The limitations below reflect
+      both the boundaries of this dataset and the nature of the metric itself.
     </p>
   </div>
   <div class="limit-grid">
@@ -771,17 +772,17 @@
     <div class="limit-card">
       <div class="limit-num">02</div>
       <h3>Year correlation is structural, not causal</h3>
-      <p>The r = 0.82 correlation between year and popularity reflects Spotify's recency-weighted scoring algorithm, not evidence that newer music is inherently better. A song from 2015 is not more popular than one from 1980 because it is higher quality — it is more popular because Spotify's algorithm prioritises recent streaming counts.</p>
+      <p>The r = 0.82 correlation between year and popularity reflects Spotify's recency-weighted scoring algorithm, not evidence that newer music is inherently better. A song from 2015 is not more popular than one from 1980 because it is higher quality,it is more popular because Spotify's algorithm prioritises recent streaming counts.</p>
     </div>
     <div class="limit-card">
       <div class="limit-num">03</div>
       <h3>Spotify-only measure: cross-platform behaviour not captured</h3>
-      <p>A track viral on TikTok, YouTube, or Apple Music may show low Spotify popularity in the training data. The model cannot generalise to overall commercial success — only to Spotify-specific streaming at one point in time.</p>
+      <p>A track viral on TikTok, YouTube, or Apple Music may show low Spotify popularity in the training data. The model cannot generalise to overall commercial success,only to Spotify-specific streaming at one point in time.</p>
     </div>
     <div class="limit-card">
       <div class="limit-num">04</div>
       <h3>No genre labels: audio proxies are incomplete</h3>
-      <p>The dataset contains no genre column. Audio features act as imperfect genre proxies, which is why the explicit flag carries disproportionate weight — it is the closest available signal for hip-hop and R&amp;B concentration. A genre label would likely absorb most of this effect and improve the model's ability to distinguish genre-specific patterns.</p>
+      <p>The dataset contains no genre column. Audio features act as imperfect genre proxies, which is why the explicit flag carries disproportionate weight,it is the closest available signal for hip-hop and R&amp;B concentration. A genre label would likely absorb most of this effect and improve the model's ability to distinguish genre-specific patterns.</p>
     </div>
   </div>
 </section>
@@ -805,7 +806,7 @@
   <div class="app-features">
     <div class="app-feature">
       <h3>Artist Lookup</h3>
-      <p>Type any artist name — the model retrieves their avg_popularity from training data to anchor the prediction.</p>
+      <p>Type any artist name,the model retrieves their avg_popularity from training data to anchor the prediction.</p>
     </div>
     <div class="app-feature">
       <h3>Audio Sliders</h3>
@@ -883,7 +884,7 @@
 <!-- ═══════════════════════════════════════════════════════ FOOTER -->
 <footer>
   <p style="color:var(--muted); margin-bottom:0.5rem;">
-    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial College London | Executive Education in Data Science &nbsp;·&nbsp; 2026
+    Çağla Akın &nbsp;·&nbsp; Imperial College London | Executive Education in Data Science &nbsp;·&nbsp; 2026
   </p>
   <p>
     <a href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
