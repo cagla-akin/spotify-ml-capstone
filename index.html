@@ -306,7 +306,7 @@
     </p>
     <p>
       The most important finding is not how accurate the model is, but what it tells us about popularity itself.
-      <strong>Release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
+      <strong style="color:var(--green);">Release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
       of the model's predictive weight.</strong> All 13 audio features, danceability, energy, loudness,
       acousticness, valence, tempo, and more, contribute less than 3% combined. A song from an unknown
       artist will almost always underperform a track from an established name, regardless of how good it sounds.
@@ -328,7 +328,7 @@
   <h2>169,909 Tracks, Zero Missing Values, One Major Decision</h2>
   <div class="prose">
     <p>
-      The dataset was provided as part of the <a href="https://docs.google.com/document/d/18aFTxwFBjFCm1Gi6eLk6s7xl2b-MQICkg0iOAqgOHdk/edit?tab=t.0#heading=h.1vhakk7tapxz" target="_blank" style="color:var(--green); text-decoration:none;">Imperial College London case study</a>
+      The dataset was provided as part of the <a href="https://docs.google.com/document/d/18aFTxwFBjFCm1Gi6eLk6s7xl2b-MQICkg0iOAqgOHdk/edit?tab=t.0#heading=h.1vhakk7tapxz" target="_blank" style="color:var(--green); text-decoration:none;">Data Science case study</a>
       and contains tracks pulled from the Spotify Web API, covering releases from 1921 to 2020.
       A full quality check confirmed zero missing values across all 169,909 rows. No imputation
       was required. The only cleaning decision of consequence was handling zero-popularity tracks.
@@ -375,23 +375,23 @@
     </div>
     <div style="display:flex; flex-direction:column; gap:1.25rem;">
       <div class="finding-card">
+        <p style="color:var(--white); font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">27,357 tracks with 0 popularity removed</p>
         <p style="color:var(--off); font-size:1rem; line-height:1.7; margin-bottom:0.75rem;">
           16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
           insufficient streaming data, not that the song was heard and disliked. Including
           these would add noise to the target without representing genuine listening behaviour.
           All tracks with popularity ≥ 1 were retained: 142,552 active tracks.
         </p>
-        <p class="label" style="margin-bottom:0.25rem;">Tracks removed</p>
         <div class="big-num" style="font-size:2.8rem;">27,357</div>
       </div>
       <div class="finding-card">
+        <p style="color:var(--white); font-size:0.95rem; font-weight:600; margin-bottom:0.75rem;">9,904 re-releases retained across 21,473 tracks</p>
         <p style="color:var(--off); font-size:1rem; line-height:1.7; margin-bottom:0.75rem;">
           9,904 songs appear more than once with unique Spotify IDs, representing remasters,
           re-issues, or alternate album versions, involving 21,473 tracks total.
           Popularity spread across versions averages 13.6 points; the maximum for a single song is 86 points.
           All versions are retained as each is a distinct Spotify product with its own streaming history.
         </p>
-        <p class="label" style="margin-bottom:0.25rem;">Re-releases retained</p>
         <div class="big-num" style="font-size:2.8rem;">9,904</div>
       </div>
     </div>
@@ -794,10 +794,13 @@
   <h2>Spotify Hit Predictor: Live App</h2>
   <div class="prose">
     <p>
-      A Streamlit application deployed on AWS lets you predict a track's popularity score in real time.
+      A Streamlit application lets you predict a track's popularity score in real time.
       Type any artist name and the app retrieves their historical average popularity from the training data.
       Adjust audio feature sliders to simulate different track configurations. The XGBoost model returns
       an instant predicted popularity score (0–100) with a breakdown of which inputs drove the result.
+    </p>
+    <p style="font-size:0.9rem; color:var(--muted); margin-top:0.75rem;">
+      Originally developed and tested on AWS EC2. The live demo is hosted on Streamlit Community Cloud for persistent public access without lab credentials.
     </p>
   </div>
 
@@ -815,8 +818,8 @@
       <p>XGBoost model returns a predicted popularity score (0–100) instantly on every input change.</p>
     </div>
     <div class="app-feature">
-      <h3>AWS Deployment</h3>
-      <p>App is containerised and deployed on AWS for persistent availability beyond local development.</p>
+      <h3>Cloud Deployment</h3>
+      <p>Originally developed on AWS EC2. Live demo hosted on Streamlit Community Cloud for persistent public access.</p>
     </div>
   </div>
 
