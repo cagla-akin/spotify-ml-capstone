@@ -21,8 +21,6 @@ def load_and_train():
     df = pd.read_csv("spotify_data 2.csv")
     df = df.dropna().reset_index(drop=True)
 
-    # Extract primary artist (first in list) so "Taylor Swift" matches all her tracks,
-    # not just tracks where she appears alone in the artists field
     def primary_artist(val):
         try:
             parsed = ast.literal_eval(val)
@@ -32,9 +30,6 @@ def load_and_train():
 
     df["primary_artist"] = df["artists"].apply(primary_artist)
 
-    # Artist avg popularity = mean of their top 5 tracks
-    # This captures hit-making ability rather than back-catalog average,
-    # so prolific artists with many deep cuts are not penalised
     top10_mean = (
         df[df["popularity"] > 0]
         .groupby("primary_artist")["popularity"]
@@ -44,7 +39,6 @@ def load_and_train():
     df = df.join(top10_mean, on="primary_artist")
     df["artist_avg_popularity"] = df["artist_avg_popularity"].fillna(df["popularity"].median())
 
-    # Artist lookup table: clean name → avg popularity
     artist_lookup = (
         top10_mean
         .reset_index()
@@ -52,7 +46,6 @@ def load_and_train():
     )
     artist_lookup["artist_lower"] = artist_lookup["artist_name"].str.lower()
 
-    # Features & target
     drop_cols = ["id", "name", "artists", "release_date", "popularity", "primary_artist"]
     X = df.drop(columns=drop_cols)
     y = df["popularity"]
@@ -76,10 +69,8 @@ def get_artist_popularity(name):
     if not name.strip():
         return None, None
     name_lower = name.strip().lower()
-    # Exact match first
     match = artist_lookup[artist_lookup["artist_lower"] == name_lower]
     if match.empty:
-        # Partial match
         match = artist_lookup[artist_lookup["artist_lower"].str.contains(name_lower, na=False)]
     if match.empty:
         return None, None
@@ -89,17 +80,17 @@ def get_artist_popularity(name):
 # ── Helper: popularity gauge chart ───────────────────────────────────────────
 def make_gauge(score):
     if score >= 70:
-        color = "#1DB954"   # Spotify green
-        label = "🔥 Hit Potential"
+        color = "#1DB954"
+        label = "Hit Potential"
     elif score >= 50:
         color = "#FFA500"
-        label = "📈 Growing"
+        label = "Growing"
     elif score >= 30:
         color = "#FFD700"
-        label = "🎵 Niche"
+        label = "Niche"
     else:
         color = "#E8115B"
-        label = "📉 Low Reach"
+        label = "Low Reach"
 
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
@@ -111,10 +102,10 @@ def make_gauge(score):
             "bar": {"color": color, "thickness": 0.25},
             "bgcolor": "white",
             "steps": [
-                {"range": [0, 30],  "color": "#ffe5ec"},
-                {"range": [30, 50], "color": "#fff3cd"},
-                {"range": [50, 70], "color": "#fff8e1"},
-                {"range": [70, 100],"color": "#e8f8f0"},
+                {"range": [0, 30],   "color": "#ffe5ec"},
+                {"range": [30, 50],  "color": "#fff3cd"},
+                {"range": [50, 70],  "color": "#fff8e1"},
+                {"range": [70, 100], "color": "#e8f8f0"},
             ],
             "threshold": {
                 "line": {"color": color, "width": 4},
@@ -126,21 +117,11 @@ def make_gauge(score):
     fig.update_layout(height=300, margin=dict(t=40, b=10, l=20, r=20))
     return fig
 
-# ── UI ────────────────────────────────────────────────────────────────────────
-st.title("🎵 Spotify Hit Predictor")
-st.markdown(
-    "Enter an **artist name** and adjust the **audio features** to predict how popular a song would be. "
-    "The model was trained on ~170,000 Spotify tracks and achieves **R² = {:.2f}** on unseen data.".format(r2_test)
-)
-st.divider()
-
-col_inputs, col_result = st.columns([1, 1], gap="large")
-
-# ── LEFT: Inputs ──────────────────────────────────────────────────────────────
-with col_inputs:
-    st.subheader("🎤 Artist")
+# ── Sidebar: inputs ───────────────────────────────────────────────────────────
+with st.sidebar:
+    st.subheader("Artist")
     artist_input = st.text_input(
-        "Artist name (type any artist from the dataset)",
+        "Artist name",
         placeholder="e.g. Taylor Swift, Drake, The Weeknd"
     )
 
@@ -148,81 +129,96 @@ with col_inputs:
 
     if artist_input:
         if found_name:
-            st.success(f"✓ Found: **{found_name}** — avg popularity: **{found_pop:.1f}**")
+            st.success(f"✓ {found_name} — avg popularity: {found_pop:.1f}")
             artist_avg = found_pop
         else:
-            st.warning("Artist not found in dataset. Using dataset average.")
+            st.warning("Artist not found. Using dataset average.")
             artist_avg = float(global_median["artist_avg_popularity"])
     else:
         artist_avg = float(global_median["artist_avg_popularity"])
 
-    st.subheader("🎛️ Audio Features")
+    st.subheader("Audio Features")
     st.caption("Drag the sliders to describe your song's sound.")
 
-    danceability     = st.slider("Danceability",      0.0, 1.0, float(global_median["danceability"]),     0.01)
-    energy           = st.slider("Energy",            0.0, 1.0, float(global_median["energy"]),           0.01)
-    valence          = st.slider("Valence (happiness)",0.0, 1.0, float(global_median["valence"]),         0.01)
-    acousticness     = st.slider("Acousticness",      0.0, 1.0, float(global_median["acousticness"]),     0.01)
-    instrumentalness = st.slider("Instrumentalness",  0.0, 1.0, float(global_median["instrumentalness"]), 0.01)
-    speechiness      = st.slider("Speechiness",       0.0, 1.0, float(global_median["speechiness"]),      0.01)
-    liveness         = st.slider("Liveness",          0.0, 1.0, float(global_median["liveness"]),         0.01)
-    loudness         = st.slider("Loudness (dB)",    -60.0, 0.0, float(global_median["loudness"]),        0.1)
-    tempo            = st.slider("Tempo (BPM)",       50.0, 220.0, float(global_median["tempo"]),         1.0)
-    duration_ms      = st.slider("Duration (ms)",     30000, 600000, int(global_median["duration_ms"]),   1000)
+    acousticness     = st.slider("Acousticness",       0.0, 1.0, float(global_median["acousticness"]),     0.01)
+    danceability     = st.slider("Danceability",       0.0, 1.0, float(global_median["danceability"]),     0.01)
+    energy           = st.slider("Energy",             0.0, 1.0, float(global_median["energy"]),           0.01)
+    valence          = st.slider("Valence (happiness)", 0.0, 1.0, float(global_median["valence"]),         0.01)
+    instrumentalness = st.slider("Instrumentalness",   0.0, 1.0, float(global_median["instrumentalness"]), 0.01)
+    speechiness      = st.slider("Speechiness",        0.0, 1.0, float(global_median["speechiness"]),      0.01)
+    liveness         = st.slider("Liveness",           0.0, 1.0, float(global_median["liveness"]),         0.01)
+    loudness         = st.slider("Loudness (dB)",     -60.0, 0.0, float(global_median["loudness"]),        0.1)
+    tempo            = st.slider("Tempo (BPM)",        50.0, 220.0, float(global_median["tempo"]),         1.0)
+    duration_ms      = st.slider("Duration (ms)",      30000, 600000, int(global_median["duration_ms"]),   1000)
     explicit         = st.selectbox("Explicit lyrics?", [0, 1], format_func=lambda x: "Yes" if x else "No")
     key              = st.selectbox("Key", list(range(12)),
                                     format_func=lambda x: ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'][x])
     mode             = st.selectbox("Mode", [0, 1], format_func=lambda x: "Major" if x else "Minor")
     year             = st.slider("Release Year", 1990, 2023, 2022, 1)
 
-# ── RIGHT: Prediction result ──────────────────────────────────────────────────
-with col_result:
-    st.subheader("🔮 Predicted Popularity")
+# ── Main area ─────────────────────────────────────────────────────────────────
+st.title("Spotify Hit Predictor")
+st.markdown(
+    "Powered by an **XGBoost model** trained on ~170,000 Spotify tracks and deployed on **AWS SageMaker**. "
+    "Adjust the sliders on the left and see your prediction update instantly."
+)
+st.divider()
 
-    # Build input row in the same column order as training
-    input_data = {
-        "danceability":     danceability,
-        "energy":           energy,
-        "key":              key,
-        "loudness":         loudness,
-        "mode":             mode,
-        "speechiness":      speechiness,
-        "acousticness":     acousticness,
-        "instrumentalness": instrumentalness,
-        "liveness":         liveness,
-        "valence":          valence,
-        "tempo":            tempo,
-        "duration_ms":      duration_ms,
-        "explicit":         explicit,
-        "year":             year,
-        "artist_avg_popularity": artist_avg
-    }
+# Build prediction
+input_data = {
+    "danceability":     danceability,
+    "energy":           energy,
+    "key":              key,
+    "loudness":         loudness,
+    "mode":             mode,
+    "speechiness":      speechiness,
+    "acousticness":     acousticness,
+    "instrumentalness": instrumentalness,
+    "liveness":         liveness,
+    "valence":          valence,
+    "tempo":            tempo,
+    "duration_ms":      duration_ms,
+    "explicit":         explicit,
+    "year":             year,
+    "artist_avg_popularity": artist_avg
+}
 
-    input_df = pd.DataFrame([input_data])[feature_cols]
-    predicted = float(model.predict(input_df)[0])
-    predicted = max(0.0, min(100.0, predicted))
+input_df = pd.DataFrame([input_data])[feature_cols]
+predicted = float(model.predict(input_df)[0])
+predicted = max(0.0, min(100.0, predicted))
 
+col_gauge, col_scale = st.columns([1.2, 1], gap="large")
+
+with col_gauge:
+    st.subheader("Predicted Popularity")
     st.plotly_chart(make_gauge(predicted), use_container_width=True)
 
-    # Breakdown
-    st.markdown("#### 📊 Popularity Scale")
-    st.markdown(
-        f"""
-| Score Range | Label |
-|---|---|
-| 🟥 0–30 | Low reach |
-| 🟨 30–50 | Niche audience |
-| 🟧 50–70 | Growing track |
-| 🟩 **70–100** | **Hit potential** |
-        """
-    )
+with col_scale:
+    st.subheader("Popularity Scale")
 
-    st.divider()
-    st.markdown("#### Feature Snapshot")
-    snap = pd.DataFrame({
-        "Feature": ["Artist avg popularity", "Danceability", "Energy", "Valence", "Acousticness", "Tempo"],
-        "Value":   [round(artist_avg,1), danceability, energy, valence, acousticness, round(tempo,1)]
-    })
-    st.dataframe(snap, hide_index=True, use_container_width=True)
+    categories = [
+        ("Low reach",      "0–30",   predicted < 30),
+        ("Niche audience", "30–50",  30 <= predicted < 50),
+        ("Growing track",  "50–70",  50 <= predicted < 70),
+        ("Hit potential",  "70–100", predicted >= 70),
+    ]
 
-    st.caption(f"Model: XGBoost (Default) · Test R² = {r2_test:.4f} · ~170k training tracks")
+    for label, score_range, active in categories:
+        if active:
+            st.markdown(
+                f"""<div style="padding:0.75rem 1rem; border:1px solid #1DB954;
+                border-radius:4px; margin-bottom:0.5rem; background:#0d2b1a;">
+                <strong style="color:#1DB954;">{label}</strong>
+                <span style="color:#1DB954; float:right;">{score_range}</span></div>""",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                f"""<div style="padding:0.75rem 1rem; border:1px solid #333;
+                border-radius:4px; margin-bottom:0.5rem;">
+                <span style="color:#ccc;">{label}</span>
+                <span style="color:#666; float:right;">{score_range}</span></div>""",
+                unsafe_allow_html=True
+            )
+
+st.caption(f"Model: XGBoost · ~170k tracks · AWS SageMaker")
