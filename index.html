@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>What Makes a Song Popular? — Çağla Akın</title>
   <link href="https://fonts.googleapis.com/css2?family=Georgia&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -49,13 +48,13 @@
     /* ── SECTIONS ── */
     section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-label {
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.14em;
       color: var(--green); text-transform: uppercase; margin-bottom: 1rem;
     }
     h1 { font-family: Georgia, serif; font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.15; color: var(--white); }
     h2 { font-family: Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--white); margin-bottom: 1rem; }
     h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.5rem; }
-    p  { color: var(--muted); margin-bottom: 1rem; }
+    p  { color: #c0c0c0; margin-bottom: 1rem; }
 
     /* ── HERO ── */
     #hero {
@@ -118,7 +117,7 @@
     .eda-finding { display: flex; gap: 1.5rem; }
     .eda-num { font-family: Georgia, serif; font-size: 2.5rem; font-weight: 700; color: var(--green); line-height: 1; flex-shrink: 0; width: 2.5rem; text-align: right; }
     .eda-content h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
-    .eda-content p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.7; }
+    .eda-content p { font-size: 0.9rem; color: #c0c0c0; margin: 0; line-height: 1.7; }
     .eda-content .stat-inline { color: var(--green); font-weight: 700; }
 
     /* ── CORRELATION BARS ── */
@@ -130,7 +129,7 @@
     .corr-fill-neg { background: #e05252; height: 100%; border-radius: 2px; margin-left: auto; }
     .corr-fill-eng { background: #5b8dee; height: 100%; border-radius: 2px; }
     .corr-val { position: absolute; right: 8px; top: 3px; color: var(--muted); font-size: 0.75rem; }
-    .corr-note { font-size: 0.78rem; color: var(--dim); margin-top: 0.75rem; }
+    .corr-note { font-size: 0.84rem; color: #c0c0c0; margin-top: 0.75rem; line-height: 1.6; }
 
     /* ── INSIGHT CALLOUTS ── */
     .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
@@ -143,10 +142,6 @@
     .insight-card .pct { font-family: Georgia, serif; font-size: 3rem; font-weight: 700; color: var(--green); line-height: 1; }
     .insight-card.dim-top .pct { color: var(--muted); }
     .insight-card p { font-size: 0.9rem; margin-top: 0.6rem; margin-bottom: 0; }
-
-    /* ── CHART ── */
-    .chart-wrap { background: var(--surface); padding: 2rem; border-radius: 2px; margin-top: 2rem; }
-    .chart-wrap canvas { max-height: 320px; }
 
     /* ── MODEL TABLE ── */
     .table-wrap { overflow-x: auto; margin-top: 2rem; }
@@ -161,20 +156,37 @@
     .badge { display: inline-block; background: var(--green); color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 2px; margin-left: 0.5rem; vertical-align: middle; }
 
     /* ── PIPELINE STEPS ── */
-    .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; margin-top: 2rem; background: var(--dim); border: 1px solid var(--dim); }
-    .pipeline-step { background: var(--card); padding: 1.5rem 1.25rem; }
-    .pipeline-step .step-num { font-size: 0.68rem; font-weight: 700; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .pipeline-step h3 { font-size: 0.9rem; margin-bottom: 0.4rem; }
-    .pipeline-step p { font-size: 0.82rem; margin: 0; }
+    .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .pipeline-step {
+      background: var(--card);
+      border-left: 4px solid var(--green);
+      padding: 1.5rem 1.5rem;
+      border-radius: 2px;
+    }
+    .pipeline-step .step-num { font-size: 0.75rem; font-weight: 700; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .pipeline-step h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--white); }
+    .pipeline-step p { font-size: 0.87rem; margin: 0; color: #c0c0c0; line-height: 1.65; }
+
+    /* ── TUNING CALLOUT ── */
+    .tuning-callout {
+      background: rgba(29,185,84,0.06);
+      border: 1px solid rgba(29,185,84,0.3);
+      border-left: 4px solid var(--green);
+      border-radius: 2px;
+      padding: 1.75rem 2rem;
+      margin-top: 2.5rem;
+    }
+    .tuning-callout .tuning-label { font-size: 0.75rem; font-weight: 700; color: var(--green); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .tuning-callout h3 { font-size: 1.2rem; color: var(--white); margin-bottom: 0.75rem; }
+    .tuning-callout p { font-size: 0.93rem; color: #c0c0c0; margin: 0; line-height: 1.75; }
+    .tuning-callout strong { color: var(--white); }
 
     /* ── BIZ IMPLICATION CARDS ── */
     .biz-grid { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
     .biz-card { background: var(--surface); padding: 1.75rem 2rem; border-radius: 2px; border-left: 4px solid var(--green); display: flex; gap: 1.5rem; align-items: flex-start; }
-    .biz-card.dim { border-left-color: var(--dim); }
     .biz-num { font-family: Georgia, serif; font-size: 2.8rem; font-weight: 700; color: var(--green); line-height: 1; flex-shrink: 0; }
-    .biz-card.dim .biz-num { color: var(--muted); }
     .biz-content h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.35rem; }
-    .biz-content p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.7; }
+    .biz-content p { font-size: 0.9rem; color: #c0c0c0; margin: 0; line-height: 1.7; }
 
     /* ── LIMITATION CARDS ── */
     .limit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
@@ -224,7 +236,7 @@
 <nav>
   <a class="nav-logo" href="#">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
-    Spotify Capstone
+    Spotify Hit Predictor
     <span class="nav-sub">Imperial College London · 2026</span>
   </a>
   <ul class="nav-links">
@@ -239,7 +251,7 @@
 
 <!-- ═══════════════════════════════════════════════════════ HERO -->
 <section id="hero">
-  <p class="section-label">Capstone Project · Imperial Executive Education · 2026</p>
+  <p class="section-label">Capstone Project · Imperial College London | Executive Education in Data Science · 2026</p>
   <h1>What Makes a Song<br><span>Popular?</span></h1>
   <p class="subtitle">
     Predicting Spotify track popularity using machine learning on 169,909 tracks
@@ -284,27 +296,26 @@
     <p>
       This project builds a machine learning model to predict the popularity of Spotify tracks,
       scored 0–100 by Spotify's algorithm. Using a dataset of 169,909 tracks spanning 1921–2020,
-      the goal was to identify what actually drives streaming popularity — and what does not.
+      the goal was to identify what actually drives streaming popularity and what does not.
     </p>
     <p>
       Five models were trained and evaluated: Dummy Regressor, Linear Regression, Random Forest,
       and XGBoost (default and tuned). The best-performing model is <strong>XGBoost with default
       parameters</strong>, achieving RMSE = 9.65 and R² = 0.72 on a held-out test set of 28,511 tracks.
-      Hyperparameter tuning via RandomizedSearchCV (50 iterations, 3-fold CV) produced no meaningful
-      improvement — tuned RMSE = 9.72, confirming that default parameters are near-optimal for this dataset.
+      Hyperparameter tuning via RandomizedSearchCV (50 iterations, 3-fold CV) produced no improvement;
+      the tuned model scored RMSE = 9.72, confirming that default parameters are near-optimal for this dataset.
     </p>
     <p>
       The most important finding is not the model's accuracy but what it reveals about popularity itself:
       <strong>release year (r = 0.82) and artist average popularity (r = 0.72) together account for 97%
       of the model's predictive weight</strong>. All 13 audio features — danceability, energy, loudness,
-      acousticness, valence, tempo, and more — contribute less than 3% combined. A great-sounding song
-      from an unknown artist will almost always underperform a mediocre track from an established star.
+      acousticness, valence, tempo, and more — contribute less than 3% combined. A song from an unknown
+      artist will almost always underperform a track from an established star, regardless of audio quality.
     </p>
     <p>
-      For Spotify, which paid approximately $9B in royalties in 2023 (~70% of total revenue), this finding
-      has direct commercial implications: royalty rates set against audio quality are set against the wrong
-      signal. The dominant drivers of popularity — artist reputation and release timing — are knowable
-      before a contract is signed.
+      For Spotify, which paid $11B in royalties in 2025, this finding has direct commercial implications:
+      the dominant drivers of popularity — artist reputation and release timing — are knowable before a
+      contract is signed.
     </p>
   </div>
 </section>
@@ -434,7 +445,11 @@
           <div class="corr-track"><div class="corr-fill-neg" style="width:47%;"></div><span class="corr-val">-0.47</span></div>
         </div>
       </div>
-      <p class="corr-note">✦ Engineered feature (Section: Feature Engineering). Green = structural predictors. Blue = audio features. Red = negative correlation.</p>
+      <p class="corr-note">
+        ✦ Engineered feature — computed from training data only, not a raw Spotify variable.<br>
+        Green bars = structural predictors (year, artist reputation).<br>
+        Blue bars = audio features. Red bars = negative correlation.
+      </p>
     </div>
 
     <div class="eda-findings">
@@ -442,7 +457,7 @@
         <span class="eda-num">1</span>
         <div class="eda-content">
           <h3>Year dominates: r = 0.82</h3>
-          <p>Release year is the strongest raw predictor — 2x stronger than the next-best audio feature (loudness, r = 0.41). This is structural: <span class="stat-inline">Spotify's popularity score reflects recent streaming activity</span>, so newer tracks systematically score higher. Decade averages climb from 7 (1920s) to 66 (2020s). This is recency bias, not song quality.</p>
+          <p>Release year is the strongest raw predictor, twice as strong as the next-best audio feature (loudness, r = 0.41). This is structural: <span class="stat-inline">Spotify's popularity score reflects recent streaming activity</span>, so newer tracks systematically score higher. Decade averages climb from 7 (1920s) to 66 (2020s). This is recency bias, not song quality.</p>
         </div>
       </div>
       <div class="eda-finding">
@@ -463,14 +478,14 @@
         <span class="eda-num">4</span>
         <div class="eda-content">
           <h3>Popularity is right-skewed, mean = 37.6</h3>
-          <p>After removing zero-popularity tracks, the distribution has mean = 37.6, median = 38.0, std = 18.1. Fewer tracks achieve high popularity (80–100) than mid-range (20–60). No transformation was applied: tree-based models are robust to skewed targets.</p>
+          <p>After removing zero-popularity tracks, the distribution has mean = 37.6, median = 38.0, std = 18.1. Only 25% of tracks score above 51; the distribution is concentrated in the 20–60 range. No transformation was applied: tree-based models are robust to skewed targets.</p>
         </div>
       </div>
       <div class="eda-finding">
         <span class="eda-num">5</span>
         <div class="eda-content">
           <h3>Re-releases vary by up to 86 popularity points</h3>
-          <p>The same song released in different years can score dramatically differently. Average spread across re-releases is <span class="stat-inline">13.6 points</span>; maximum is 86 points. This confirms year as a meaningful feature beyond just recency bias — it distinguishes real versions of the same track.</p>
+          <p>The same song released in different years can score differently. Average spread across re-releases is <span class="stat-inline">13.6 points</span>; the maximum is 86 points. This confirms year as a meaningful feature beyond recency bias — it distinguishes real versions of the same track.</p>
         </div>
       </div>
       <div class="eda-finding">
@@ -493,14 +508,10 @@
   <h2>One Engineered Feature Drives Almost All Model Performance</h2>
   <div class="prose">
     <p>
-      Feature engineering was performed on the training set only and applied to the test set to prevent
-      data leakage. The split (80/20, random_state=42) was performed before any transformation.
-    </p>
-    <p>
-      The most impactful step was engineering <strong>artist_avg_popularity</strong>: the mean popularity
-      of each artist's top-3 tracks, computed from training data only. Unseen artists receive a fallback
-      value of 44.09 (training mean). This single feature achieves r = 0.72 with the target and is
-      computable from Spotify's API before a contract is signed, making it the most actionable
+      The highest-impact step was engineering <strong>artist_avg_popularity</strong>: the mean popularity
+      of each artist's top 3 tracks, computed from training data only. Artists not seen in training receive
+      a fallback value of 44.09 (the training mean). This single feature achieves r = 0.72 with the target
+      and is computable from Spotify's API before a contract is signed, making it the most actionable
       pre-contract signal in the entire model.
     </p>
   </div>
@@ -509,22 +520,22 @@
     <div class="pipeline-step">
       <div class="step-num">Step 01</div>
       <h3>Drop identity columns</h3>
-      <p>Remove id, name, release_date, decade — these do not generalise and would leak information.</p>
+      <p>Remove id, name, release_date, and decade. These columns are unique per row and do not generalise to unseen tracks.</p>
     </div>
     <div class="pipeline-step">
       <div class="step-num">Step 02 ✦</div>
       <h3>Engineer artist_avg_popularity</h3>
-      <p>Mean of artist's top-3 track popularities, from train set only. Fallback = 44.09 for unseen artists. Achieves r = 0.72.</p>
+      <p>Mean of each artist's top 3 track popularities, computed from the training set only. Artists not in training receive a fallback of 44.09. Achieves r = 0.72 with the target.</p>
     </div>
     <div class="pipeline-step">
       <div class="step-num">Step 03</div>
-      <h3>One-hot encode key</h3>
-      <p>Musical key (0–11) encoded to 11 binary columns using pd.get_dummies (drop_first=True to avoid multicollinearity).</p>
+      <h3>Encode musical key</h3>
+      <p>Musical key (integers 0–11, representing C through B) is converted to 11 binary columns using one-hot encoding, with one category dropped to avoid multicollinearity.</p>
     </div>
     <div class="pipeline-step">
       <div class="step-num">Step 04</div>
-      <h3>StandardScaler for LR only</h3>
-      <p>Numeric features scaled before Linear Regression only. Fit on X_train, applied to X_test. Tree models receive unscaled inputs.</p>
+      <h3>Scale for Linear Regression only</h3>
+      <p>All numeric features are standardised (mean = 0, std = 1) before fitting Linear Regression. Scaler is fit on the training set only and applied to the test set. Random Forest and XGBoost receive unscaled inputs.</p>
     </div>
   </div>
 
@@ -533,8 +544,13 @@
       <strong>Final feature set: 25 columns.</strong>
       Numeric: acousticness, danceability, duration_ms, energy, explicit, instrumentalness, liveness, loudness, mode,
       speechiness, tempo, valence, year, artist_avg_popularity (14 features).
-      One-hot encoded key: key_1 through key_11 (11 features).
-      LabelEncoder was not used. StandardScaler was not applied to OHE columns.
+      One-hot encoded key columns: key_1 through key_11 (11 binary columns, one per musical key excluding the reference category).
+    </p>
+  </div>
+
+  <div class="callout" style="margin-top:1rem; background: rgba(255,255,255,0.03); border-color: var(--dim);">
+    <p style="color: var(--muted);">
+      <strong style="color:var(--off);">Data leakage prevention:</strong> The train/test split (80/20, random_state=42) was performed on the raw cleaned dataset before any feature engineering. All transformations — artist average computation, one-hot encoding, and scaling — were fit exclusively on the training set and applied to the test set.
     </p>
   </div>
 </section>
@@ -548,68 +564,92 @@
   <h2>Five Models, One Clear Winner</h2>
   <div class="prose">
     <p>
-      All models were evaluated on the same held-out test set (28,511 tracks). RMSE is reported as a
-      percentage of mean popularity (37.6) to contextualise magnitude. A train/test RMSE gap of less
-      than 1 point indicates the model generalises well without overfitting.
+      All models were evaluated on the same held-out test set of 28,511 tracks. RMSE is reported as a
+      percentage of mean popularity (37.6) to contextualise magnitude. A 47% improvement in RMSE over
+      the dummy baseline confirms the model adds genuine predictive value.
     </p>
   </div>
 
-  <div class="two-col" style="margin-top:2.5rem;">
-    <div class="chart-wrap" style="margin-top:0;">
-      <canvas id="modelChart"></canvas>
-    </div>
-    <div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>Test R²</th>
-              <th>RMSE</th>
-              <th>RMSE %</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Dummy Regressor</td>
-              <td>0.00</td>
-              <td>18.17</td>
-              <td>48.2%</td>
-            </tr>
-            <tr>
-              <td>Linear Regression</td>
-              <td>0.70</td>
-              <td>10.02</td>
-              <td>26.6%</td>
-            </tr>
-            <tr>
-              <td>Random Forest</td>
-              <td>0.71</td>
-              <td>9.77</td>
-              <td>25.9%</td>
-            </tr>
-            <tr class="winner">
-              <td>XGBoost (Default) <span class="badge">Best</span></td>
-              <td>0.72</td>
-              <td>9.65</td>
-              <td>25.6%</td>
-            </tr>
-            <tr>
-              <td>XGBoost (Tuned)</td>
-              <td>0.71</td>
-              <td>9.72</td>
-              <td>25.8%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:1rem; font-size:0.82rem; color:var(--green);">✓ Train/test RMSE gap &lt; 1 point across all models — no meaningful overfitting</p>
-      <p style="font-size:0.82rem; color:var(--muted);">
-        Hyperparameter tuning (RandomizedSearchCV, 50 iterations, 3-fold CV) achieved CV RMSE = 8.74 but test RMSE = 9.72,
-        worse than the default model (9.65). The tuned model overfit to the CV fold distribution.
-        Default XGBoost was selected as the final model.
-      </p>
-    </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Train RMSE</th>
+          <th>Test RMSE</th>
+          <th>Gap (Test − Train)</th>
+          <th>Test R²</th>
+          <th>RMSE % of Mean</th>
+          <th>vs. Baseline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Dummy Regressor</td>
+          <td>18.08</td>
+          <td>18.17</td>
+          <td style="color:var(--muted);">0.09</td>
+          <td>0.00</td>
+          <td>48.2%</td>
+          <td style="color:var(--muted);">—</td>
+        </tr>
+        <tr>
+          <td>Linear Regression</td>
+          <td>9.49</td>
+          <td>10.02</td>
+          <td style="color:var(--green);">0.53</td>
+          <td>0.70</td>
+          <td>26.6%</td>
+          <td style="color:var(--green);">−44.8%</td>
+        </tr>
+        <tr>
+          <td>Random Forest</td>
+          <td>3.39</td>
+          <td>9.77</td>
+          <td style="color:#e05252;">6.37 ⚠</td>
+          <td>0.71</td>
+          <td>25.9%</td>
+          <td style="color:var(--green);">−46.2%</td>
+        </tr>
+        <tr class="winner">
+          <td>XGBoost (Default) <span class="badge">Best</span></td>
+          <td>8.03</td>
+          <td>9.65</td>
+          <td style="color:var(--green);">1.62</td>
+          <td>0.72</td>
+          <td>25.6%</td>
+          <td style="color:var(--green);">−46.9%</td>
+        </tr>
+        <tr>
+          <td>XGBoost (Tuned)</td>
+          <td>8.00</td>
+          <td>9.72</td>
+          <td style="color:var(--green);">1.72</td>
+          <td>0.71</td>
+          <td>25.8%</td>
+          <td style="color:var(--green);">−46.5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:0.75rem; font-size:0.82rem; color:var(--muted);">
+    Gap = Test RMSE − Train RMSE. A large gap indicates overfitting. Random Forest memorised the training data (train RMSE = 3.39) but generalised poorly, producing a gap of 6.37. XGBoost (Default) achieves the best test performance with a contained gap of 1.62, making it the most reliable model. Mean popularity of active tracks = 37.6.
+  </p>
+
+  <!-- Hyperparameter tuning -->
+  <div class="tuning-callout">
+    <div class="tuning-label">Hyperparameter Tuning</div>
+    <h3>RandomizedSearchCV: 50 iterations, 3-fold CV, 6 parameters — no improvement over default</h3>
+    <p>
+      XGBoost's default parameters were tested against a randomised grid covering
+      <strong>n_estimators</strong> (100–500), <strong>max_depth</strong> (3–7),
+      <strong>learning_rate</strong> (0.01–0.2), <strong>subsample</strong> (0.6–1.0),
+      <strong>colsample_bytree</strong> (0.6–1.0), and <strong>min_child_weight</strong> (1–5).
+      Best parameters found: subsample=0.9, n_estimators=300, min_child_weight=5, max_depth=7,
+      learning_rate=0.05, colsample_bytree=1.0. Cross-validation RMSE = 8.74; test RMSE = 9.72.
+      The tuned model <strong>underperformed the default</strong> (test RMSE = 9.65) because the CV
+      score overfit to the training fold distribution. XGBoost default was selected as the final model.
+    </p>
   </div>
 
   <!-- Feature importance -->
@@ -654,7 +694,7 @@
   <h2>What This Means for Spotify's Royalty Risk</h2>
   <div class="prose">
     <p>
-      Spotify paid approximately $9B in royalties in 2023, representing roughly 70% of total revenue.
+      Spotify paid $11B in royalties in 2025, representing the platform's largest cost line.
       Royalty rates are negotiated before release against unknown future performance. The model's findings
       identify three concrete implications for how those rates should be assessed.
     </p>
@@ -687,8 +727,8 @@
         </p>
       </div>
     </div>
-    <div class="biz-card dim">
-      <div class="biz-num" style="color:var(--muted);">3</div>
+    <div class="biz-card">
+      <div class="biz-num">3</div>
       <div class="biz-content">
         <h3>Spotify's editorial activity creates leverage to promote lower-premium artists</h3>
         <p>
@@ -735,7 +775,7 @@
     <div class="limit-card">
       <div class="limit-num">04</div>
       <h3>No genre labels: audio proxies are incomplete</h3>
-      <p>The dataset contains no genre column. Audio features act as imperfect genre proxies, which is why the explicit flag carries disproportionate weight — it is the closest available signal for hip-hop and R&amp;B concentration. A genre label would likely absorb most of this effect cleanly.</p>
+      <p>The dataset contains no genre column. Audio features act as imperfect genre proxies, which is why the explicit flag carries disproportionate weight — it is the closest available signal for hip-hop and R&amp;B concentration. A genre label would likely absorb most of this effect and improve the model's ability to distinguish genre-specific patterns.</p>
     </div>
   </div>
 </section>
@@ -837,7 +877,7 @@
 <!-- ═══════════════════════════════════════════════════════ FOOTER -->
 <footer>
   <p style="color:var(--muted); margin-bottom:0.5rem;">
-    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial Executive Education — Data Science Programme &nbsp;·&nbsp; 2026
+    <strong style="color:var(--white);">Çağla Akın</strong> &nbsp;·&nbsp; Imperial College London | Executive Education in Data Science &nbsp;·&nbsp; 2026
   </p>
   <p>
     <a href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
@@ -847,51 +887,6 @@
     <a href="Spotify_HitPredictor_Final_v4.pptx" download>Download Deck</a>
   </p>
 </footer>
-
-
-<!-- ═══════════════════════════════════════════════════════ CHART.JS -->
-<script>
-  const ctx = document.getElementById('modelChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Dummy', 'Linear Reg.', 'Random Forest', 'XGBoost\n(Default)', 'XGBoost\n(Tuned)'],
-      datasets: [
-        {
-          label: 'Test R²',
-          data: [0.00, 0.6955, 0.7109, 0.7178, 0.7099],
-          backgroundColor: ['#535353', '#5b8dee', '#5b8dee', '#1DB954', '#444444'],
-          borderRadius: 3,
-          borderSkipped: false,
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => ' R² = ' + ctx.parsed.y.toFixed(4)
-          }
-        },
-        annotation: {}
-      },
-      scales: {
-        x: {
-          grid: { color: '#2a2a2a' },
-          ticks: { color: '#9a9a9a', font: { size: 11 }, maxRotation: 0 }
-        },
-        y: {
-          min: 0, max: 0.85,
-          grid: { color: '#2a2a2a' },
-          ticks: { color: '#9a9a9a', font: { size: 11 } },
-          title: { display: true, text: 'R²', color: '#9a9a9a', font: { size: 11 } }
-        }
-      }
-    }
-  });
-</script>
 
 </body>
 </html>
