@@ -237,7 +237,7 @@
   <a class="nav-logo" href="#">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0;"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
     Spotify Hit Predictor
-    <span class="nav-sub">Imperial College London | Executive Education in Data Science · 2026</span>
+    <span class="nav-sub">Imperial College London · Executive Education in Data Science · 2026</span>
   </a>
   <ul class="nav-links">
     <li><a href="#summary">Summary</a></li>
@@ -258,7 +258,7 @@
     model learns. Audio features contribute less than 3%.
   </p>
   <div class="btn-row">
-    <a class="btn btn-primary" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb" target="_blank">View Notebook</a>
+    <a class="btn btn-outline" href="https://github.com/cagla-akin/spotify-ml-capstone/blob/main/Spotify_HitPredictor_Final.ipynb" target="_blank">View Notebook</a>
     <a class="btn btn-outline" href="Spotify_HitPredictor_Final_v4.pptx" download>Download Deck</a>
     <a class="btn btn-outline" href="https://github.com/cagla-akin/spotify-ml-capstone" target="_blank">GitHub</a>
   </div>
@@ -299,8 +299,8 @@
     </p>
     <p>
       Five models were trained and evaluated: Dummy Regressor, Linear Regression, Random Forest,
-      and XGBoost in both default and tuned configurations. The best-performing model is <strong>XGBoost with default
-      parameters</strong>, achieving RMSE = 9.65 and R² = 0.72 on a held-out test set of 28,511 tracks.
+      and XGBoost in both default and tuned configurations. The best-performing model is XGBoost with default
+      parameters, achieving RMSE = 9.65 and R² = 0.72 on a held-out test set of 28,511 tracks.
       Hyperparameter tuning via RandomizedSearchCV (50 iterations, 3-fold CV) produced no improvement;
       the tuned model scored RMSE = 9.72, confirming that default parameters are already well-calibrated for this dataset.
     </p>
@@ -328,71 +328,71 @@
   <h2>169,909 Tracks, Zero Missing Values, One Major Decision</h2>
   <div class="prose">
     <p>
-      The dataset was provided as part of the <strong><a href="https://docs.google.com/document/d/18aFTxwFBjFCm1Gi6eLk6s7xl2b-MQICkg0iOAqgOHdk/edit?tab=t.0#heading=h.1vhakk7tapxz" target="_blank" style="color:var(--green); text-decoration:none;">Imperial College London case study</a></strong>
+      The dataset was provided as part of the <a href="https://docs.google.com/document/d/18aFTxwFBjFCm1Gi6eLk6s7xl2b-MQICkg0iOAqgOHdk/edit?tab=t.0#heading=h.1vhakk7tapxz" target="_blank" style="color:var(--green); text-decoration:none;">Imperial College London case study</a>
       and contains tracks pulled from the Spotify Web API, covering releases from 1921 to 2020.
-      A full quality check confirmed <strong>zero missing values</strong> across all 169,909 rows. No imputation
+      A full quality check confirmed zero missing values across all 169,909 rows. No imputation
       was required. The only cleaning decision of consequence was handling zero-popularity tracks.
     </p>
   </div>
 
   <div class="two-col" style="margin-top:2.5rem;">
     <div>
-      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem;">Dataset at a glance</h3>
+      <h3 style="color:var(--off); font-size:1rem; letter-spacing:0.04em; text-transform:uppercase; font-weight:600; margin-bottom:1rem;">Dataset at a glance</h3>
       <div style="display:flex; flex-direction:column; gap:0.75rem;">
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Raw tracks</span>
-          <span style="font-weight:700; color:var(--white);">169,909</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Raw tracks</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--white);">169,909</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Active tracks (popularity ≥ 1)</span>
-          <span style="font-weight:700; color:var(--green);">142,552</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Active tracks (popularity ≥ 1)</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--green);">142,552</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Year range</span>
-          <span style="font-weight:700; color:var(--white);">1921 – 2020</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Year range</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--white);">1921 – 2020</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Missing values</span>
-          <span style="font-weight:700; color:var(--green);">0</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Missing values</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--green);">0</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Total columns</span>
-          <span style="font-weight:700; color:var(--white);">19</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Total columns</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--white);">19</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px;">
-          <span style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:0.5rem;">Audio features (9 continuous)</span>
-          <span style="font-size:0.8rem; color:#c0c0c0;">acousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, tempo, valence</span>
+          <span style="font-size:0.9rem; color:#c0c0c0; display:block; margin-bottom:0.5rem;">Audio features (9 continuous)</span>
+          <span style="font-size:0.9rem; color:var(--off);">acousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, tempo, valence</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px;">
-          <span style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:0.5rem;">Structural variables</span>
-          <span style="font-size:0.8rem; color:#c0c0c0;">year, key (0–11), mode (major/minor), duration_ms, explicit (binary)</span>
+          <span style="font-size:0.9rem; color:#c0c0c0; display:block; margin-bottom:0.5rem;">Structural variables</span>
+          <span style="font-size:0.9rem; color:var(--off);">year, key (0–11), mode (major/minor), duration_ms, explicit (binary)</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Target variable</span>
-          <span style="font-weight:700; color:var(--green);">popularity (0–100)</span>
+          <span style="font-size:0.95rem; color:#c0c0c0;">Target variable</span>
+          <span style="font-weight:700; font-size:0.95rem; color:var(--green);">popularity (0–100)</span>
         </div>
       </div>
     </div>
     <div style="display:flex; flex-direction:column; gap:1.25rem;">
       <div class="finding-card">
-        <p class="label">Tracks removed from dataset</p>
-        <div class="big-num">27,357</div>
-        <p style="color:var(--off); margin:0; font-size:0.9rem;">
+        <p style="color:var(--off); font-size:1rem; line-height:1.7; margin-bottom:0.75rem;">
           16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
-          insufficient streaming data,not that the song was heard and disliked. Including
+          insufficient streaming data, not that the song was heard and disliked. Including
           these would add noise to the target without representing genuine listening behaviour.
-          All tracks with popularity ≥ 1 were retained: <strong style="color:var(--green);">142,552 active tracks</strong>.
+          All tracks with popularity ≥ 1 were retained: 142,552 active tracks.
         </p>
+        <p class="label" style="margin-bottom:0.25rem;">Tracks removed</p>
+        <div class="big-num" style="font-size:2.8rem;">27,357</div>
       </div>
       <div class="finding-card">
-        <p class="label">Re-releases retained</p>
-        <div class="big-num">9,904</div>
-        <p style="color:var(--off); margin:0; font-size:0.9rem;">
-          songs appear more than once with unique Spotify IDs,remasters, re-issues, or alternate
-          album versions,involving <strong style="color:var(--green);">21,473 tracks total</strong>.
+        <p style="color:var(--off); font-size:1rem; line-height:1.7; margin-bottom:0.75rem;">
+          9,904 songs appear more than once with unique Spotify IDs, representing remasters,
+          re-issues, or alternate album versions, involving 21,473 tracks total.
           Popularity spread across versions averages 13.6 points; the maximum for a single song is 86 points.
           All versions are retained as each is a distinct Spotify product with its own streaming history.
         </p>
+        <p class="label" style="margin-bottom:0.25rem;">Re-releases retained</p>
+        <div class="big-num" style="font-size:2.8rem;">9,904</div>
       </div>
     </div>
   </div>
@@ -414,7 +414,7 @@
 
   <div class="two-col" style="margin-top:3rem;">
     <div>
-      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.25rem;">Pearson Correlation with Popularity</h3>
+      <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.25rem;">Correlation with Popularity</h3>
       <div class="corr-chart">
         <div class="corr-row">
           <span class="corr-label">year</span>
@@ -450,9 +450,7 @@
         </div>
       </div>
       <p class="corr-note">
-        ✦ Engineered feature,computed from training data only, not a raw Spotify variable.<br>
-        Green bars = structural predictors (year, artist reputation).<br>
-        Blue bars = audio features. Red bars = negative correlation.
+        ✦ Engineered feature, computed from training data only, not a raw Spotify variable.
       </p>
     </div>
 
@@ -512,7 +510,7 @@
   <h2>One Engineered Feature Drives Almost All Model Performance</h2>
   <div class="prose">
     <p>
-      The highest-impact step was engineering <strong>artist_avg_popularity</strong>: the mean popularity
+      The highest-impact step was engineering artist_avg_popularity: the mean popularity
       of each artist's top 3 tracks, computed from training data only. Artists not seen in training receive
       a fallback value of 44.09 (the training mean). This single feature achieves r = 0.72 with the target
       and is computable from Spotify's API before a contract is signed, making it the most actionable
@@ -545,7 +543,7 @@
 
   <div class="callout" style="margin-top:1.5rem;">
     <p>
-      <strong>Final feature set: 25 columns.</strong>
+      Final feature set: 25 columns.
       Numeric: acousticness, danceability, duration_ms, energy, explicit, instrumentalness, liveness, loudness, mode,
       speechiness, tempo, valence, year, artist_avg_popularity (14 features).
       One-hot encoded key columns: key_1 through key_11 (11 binary columns, one per musical key excluding the reference category).
@@ -651,7 +649,7 @@
       <strong>colsample_bytree</strong> (0.6–1.0), and <strong>min_child_weight</strong> (1–5).
       Best parameters found: subsample=0.9, n_estimators=300, min_child_weight=5, max_depth=7,
       learning_rate=0.05, colsample_bytree=1.0. Cross-validation RMSE = 8.74; test RMSE = 9.72.
-      The tuned model <strong>underperformed the default</strong> (test RMSE = 9.65) because the CV
+      The tuned model underperformed the default (test RMSE = 9.65) because the CV
       score overfit to the training fold distribution. XGBoost default was selected as the final model.
     </p>
   </div>
@@ -803,7 +801,7 @@
     </p>
   </div>
 
-  <div class="app-features">
+  <div class="app-features" style="margin-top:2rem;">
     <div class="app-feature">
       <h3>Artist Lookup</h3>
       <p>Type any artist name,the model retrieves their avg_popularity from training data to anchor the prediction.</p>
