@@ -251,7 +251,7 @@
 
 <!-- ═══════════════════════════════════════════════════════ HERO -->
 <section id="hero">
-  <p class="section-label">Capstone Project · Imperial College London | Executive Education in Data Science · 2026</p>
+  <p class="section-label">Imperial College London · Executive Education in Data Science · Capstone Project</p>
   <h1>What Makes a Song<br><span>Popular?</span></h1>
   <p class="subtitle">
     Predicting Spotify track popularity using machine learning on 169,909 tracks
@@ -314,8 +314,8 @@
     </p>
     <p>
       For Spotify, which paid $11B in royalties in 2025, this finding has direct commercial implications:
-      the dominant drivers of popularity — artist reputation and release timing — are knowable before a
-      contract is signed.
+      artist reputation is measurable before a contract is signed, while release year reflects a structural
+      artifact of how Spotify scores tracks — not a lever either party can pull.
     </p>
   </div>
 </section>
@@ -329,29 +329,14 @@
   <h2>169,909 Tracks, Zero Missing Values, One Major Decision</h2>
   <div class="prose">
     <p>
-      The dataset was sourced from Kaggle and contains tracks pulled from the <strong>Spotify Web API</strong>,
-      covering releases from 1921 to 2020. Each of the 169,909 rows represents a unique Spotify track ID and
-      contains 19 columns: nine continuous audio features (acousticness, danceability, energy, instrumentalness,
-      liveness, loudness, speechiness, tempo, valence), four categorical columns (artists, id, name, release_date),
-      the binary <em>explicit</em> flag, musical key, mode, duration, year, and the target variable <em>popularity</em>.
-    </p>
-    <p>
+      The dataset was provided as part of the <strong><a href="https://docs.google.com/document/d/18aFTxwFBjFCm1Gi6eLk6s7xl2b-MQICkg0iOAqgOHdk/edit?tab=t.0#heading=h.1vhakk7tapxz" target="_blank" style="color:var(--green); text-decoration:none;">Imperial College London case study</a></strong>
+      and contains tracks pulled from the Spotify Web API, covering releases from 1921 to 2020.
       A full quality check confirmed <strong>zero missing values</strong> across all 169,909 rows. No imputation
       was required. The only cleaning decision of consequence was handling zero-popularity tracks.
     </p>
   </div>
 
   <div class="two-col" style="margin-top:2.5rem;">
-    <div class="finding-card">
-      <p class="label">Tracks removed from dataset</p>
-      <div class="big-num">27,357</div>
-      <p style="color:var(--off); margin:0; font-size:0.9rem;">
-        16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
-        insufficient streaming data — not that the song was heard and disliked. Including
-        these would add noise to the target without representing genuine listening behaviour.
-        All tracks with popularity ≥ 1 were retained: <strong style="color:var(--green);">142,552 active tracks</strong>.
-      </p>
-    </div>
     <div>
       <h3 style="color:var(--muted); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1rem;">Dataset at a glance</h3>
       <div style="display:flex; flex-direction:column; gap:0.75rem;">
@@ -360,7 +345,7 @@
           <span style="font-weight:700; color:var(--white);">169,909</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">After removing zero-popularity</span>
+          <span style="font-size:0.85rem; color:var(--muted);">Active tracks (popularity ≥ 1)</span>
           <span style="font-weight:700; color:var(--green);">142,552</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
@@ -372,25 +357,45 @@
           <span style="font-weight:700; color:var(--green);">0</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Training set (80%)</span>
-          <span style="font-weight:700; color:var(--white);">114,041</span>
+          <span style="font-size:0.85rem; color:var(--muted);">Total columns</span>
+          <span style="font-weight:700; color:var(--white);">19</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px;">
+          <span style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:0.5rem;">Audio features (9 continuous)</span>
+          <span style="font-size:0.8rem; color:#c0c0c0;">acousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, tempo, valence</span>
+        </div>
+        <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px;">
+          <span style="font-size:0.8rem; color:var(--muted); display:block; margin-bottom:0.5rem;">Structural variables</span>
+          <span style="font-size:0.8rem; color:#c0c0c0;">year, key (0–11), mode (major/minor), duration_ms, explicit (binary)</span>
         </div>
         <div style="background:var(--card); padding:1rem 1.25rem; border-radius:2px; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.85rem; color:var(--muted);">Test set (20%)</span>
-          <span style="font-weight:700; color:var(--white);">28,511</span>
+          <span style="font-size:0.85rem; color:var(--muted);">Target variable</span>
+          <span style="font-weight:700; color:var(--green);">popularity (0–100)</span>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="callout" style="margin-top:2rem;">
-    <p>
-      <strong>Re-releases retained:</strong> 9,904 songs appear more than once in the dataset with unique Spotify IDs,
-      representing remasters, re-issues, or alternate album versions — 21,473 tracks total.
-      The average popularity spread across versions of the same song is 13.6 points; the maximum is 86 points.
-      All versions are retained because each is a distinct Spotify product with its own streaming history,
-      and <em>year</em> is included as a feature to allow the model to distinguish between them.
-    </p>
+    <div style="display:flex; flex-direction:column; gap:1.25rem;">
+      <div class="finding-card">
+        <p class="label">Tracks removed from dataset</p>
+        <div class="big-num">27,357</div>
+        <p style="color:var(--off); margin:0; font-size:0.9rem;">
+          16.1% of raw tracks carry a popularity score of exactly 0, indicating Spotify has
+          insufficient streaming data — not that the song was heard and disliked. Including
+          these would add noise to the target without representing genuine listening behaviour.
+          All tracks with popularity ≥ 1 were retained: <strong style="color:var(--green);">142,552 active tracks</strong>.
+        </p>
+      </div>
+      <div class="finding-card">
+        <p class="label">Re-releases retained</p>
+        <div class="big-num">9,904</div>
+        <p style="color:var(--off); margin:0; font-size:0.9rem;">
+          songs appear more than once with unique Spotify IDs — remasters, re-issues, or alternate
+          album versions — involving <strong style="color:var(--green);">21,473 tracks total</strong>.
+          Popularity spread across versions averages 13.6 points; the maximum for a single song is 86 points.
+          All versions are retained as each is a distinct Spotify product with its own streaming history.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -708,7 +713,7 @@
         <p>
           Artist average popularity is computable from Spotify data before a contract is signed and
           achieves r = 0.72 with actual track popularity. A model score below 30 for an artist receiving
-          a premium royalty rate identifies a systematic overpayment risk — the track is structurally
+          a premium royalty rate identifies a systematic overpayment risk. The track is structurally
           unlikely to generate the streams needed to justify the rate. This makes artist_avg_popularity
           the most actionable pre-contract screening metric available.
         </p>
@@ -719,11 +724,12 @@
       <div class="biz-content">
         <h3>Marketing is the unmodelled driver that warrants further investigation</h3>
         <p>
-          The model explains 72% of popularity variance using only historical data. The remaining 28% —
-          the part the model cannot capture — likely includes playlist placements, editorial picks,
-          social media campaigns, and sync licensing. These marketing signals are not in the dataset but
-          are the mechanisms through which popularity is actively manufactured rather than passively
-          observed. Quantifying their marginal contribution would materially improve royalty risk modelling.
+          The results make a strong case that marketing activity is the real engine behind popularity. 
+          If audio features explain less than 3% of variance and artist reputation largely reflects prior 
+          promotional success, then what drives a track to the top is not how it sounds but how it is positioned. 
+          Incorporating Spotify's internal editorial and playlist placement data alongside external marketing 
+          proxies such as social media reach, sync licensing activity and label promotional spend are the 
+          critical next step to quantify where the commercial power in music actually sits.
         </p>
       </div>
     </div>
@@ -732,11 +738,11 @@
       <div class="biz-content">
         <h3>Spotify's editorial activity creates leverage to promote lower-premium artists</h3>
         <p>
-          If Spotify's own playlist curation and editorial activity are a primary driver of popularity
-          (captured in the unexplained 28%), then Spotify has direct influence over which artists become
-          popular. This creates a structural opportunity: by directing editorial support to artists on
-          lower royalty rates, Spotify can improve streaming revenue per payout dollar. The platform
-          is not a passive marketplace — it is an active participant in the popularity it then pays for.
+          Spotify has direct influence over which artists become popular with it's own playlist
+          curation and editorial activity. The platform is an active participant in the popularity
+          which then pays off. This creates a structural opportunity: by directing editorial 
+          support to artists on lower royalty rates, Spotify can improve streaming revenue per unit 
+          payout. Further data is needed to quantify the scale of this opportunity.
         </p>
       </div>
     </div>
