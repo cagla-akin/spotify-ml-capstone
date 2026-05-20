@@ -2,7 +2,7 @@
 
 ### Can data science predict what makes a song popular?
 
-**Imperial College London, Data Science Programme | Capstone Project 2026**  
+**Imperial College London | Executive Education in Data Science Programme | Capstone Project 2026**  
 **Author:** Cagla Akin  
 **Live site:** [cagla-akin.github.io/spotify-ml-capstone](https://cagla-akin.github.io/spotify-ml-capstone/)
 
@@ -10,7 +10,7 @@
 
 ## The Question
 
-Spotify processes hundreds of thousands of tracks and must decide which artists to surface, promote, and invest in, at scale. Music labels face the same challenge from the other side: which songs are worth producing?
+Spotify processes hundreds of thousands of tracks and must decide which artists to surface, promote, and invest in at scale. Music labels face the same challenge from the other side: which songs are worth signing?
 
 This project builds a machine learning tool to predict a Spotify track's **popularity score (0–100)** from audio features and artist metadata, giving both Spotify and the wider music industry a data-driven lens for those decisions.
 
@@ -20,11 +20,11 @@ This project builds a machine learning tool to predict a Spotify track's **popul
 
 **Yes, and the result is surprising.**
 
-The model predicts popularity with strong accuracy. But the more important finding is *what* actually drives popularity: it is not the music itself.
+The model predicts popularity with strong accuracy. But the more important finding is what actually drives popularity, which it is not the music itself.
 
 > **Release year and artist reputation together dominate predictive power. All 13 audio features combined (tempo, energy, danceability, loudness, and more) account for less than 3% of popularity variance.**
 
-In other words, *who* releases a song and *when* matters far more than *what the song sounds like*.
+In other words, who releases a song and when matters far more than what the song sounds like.
 
 ---
 
@@ -71,11 +71,11 @@ Five models were trained in order of increasing complexity:
 | **XGBoost (Default)** | **9.65** | **0.72** | **25.6%** |
 | XGBoost (Tuned) | 9.72 | 0.71 | 25.8% |
 
-**XGBoost (Default) is the best-performing model** with RMSE = 9.65 and R² = 0.72 on 28,511 held-out tracks. Hyperparameter tuning via RandomizedSearchCV produced no meaningful improvement; default parameters were already near-optimal. An RMSE of 9.65 means predictions are off by roughly ±10 points on a 0–100 scale, a 47% improvement over the naive baseline.
+**XGBoost (Default) is the best performing model** with RMSE = 9.65 and R² = 0.72 on 28,511 held-out tracks. Hyperparameter tuning via RandomizedSearchCV produced no meaningful improvement; default parameters were already near optimal. An RMSE of 9.65 means predictions are off by roughly ±10 points on a 0–100 scale, a ~47% improvement over the naive baseline.
 
 ---
 
-## Key Finding: Audio Features Don't Matter (Much)
+## Key Finding: Audio Features Don't Matter (As Much)
 
 Feature importance analysis reveals a counterintuitive result:
 
@@ -83,7 +83,7 @@ Feature importance analysis reveals a counterintuitive result:
 - `artist_avg_popularity` — most actionable engineered feature; top artists (Billie Eilish, Harry Styles) average ~77 popularity vs. <2 for bottom-ranked artists
 - All 13 audio features combined — less than 3% of popularity variance
 
-**What this means:** For Spotify, the implication is significant. If editorial decisions, playlist placement, and promotional activity are a major driver of popularity independent of audio quality, then Spotify holds the power to cultivate emerging artists at lower royalty rates, shifting bargaining power away from established acts. For music labels, signing established artists remains the strongest lever for chart performance; optimising a song's sonic characteristics has negligible impact.
+**What does this mean?** For Spotify, the implication is significant. If editorial decisions, playlist placement, and promotional activity are a major driver of popularity independent of audio quality, then Spotify holds the power to cultivate emerging artists at lower royalty rates, shifting bargaining power away from established acts. For music labels, signing established artists remains the strongest lever for chart performance; optimising a song's sonic characteristics has negligible impact.
 
 ---
 
